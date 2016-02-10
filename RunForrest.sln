@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunForrest.Core", "src\RunForrest.Core\RunForrest.Core.csproj", "{083642B4-3D5E-4556-888D-A43CBE505CC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunForrest.Specs", "src\RunForrest.Specs\RunForrest.Specs.csproj", "{BBDC414F-23C1-4BE0-AFA7-280738E4CE0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunForrest", "src\RunForrest\RunForrest.csproj", "{06DD80A1-CD71-4C2C-8C46-552DA5A9682E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{083642B4-3D5E-4556-888D-A43CBE505CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{083642B4-3D5E-4556-888D-A43CBE505CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{083642B4-3D5E-4556-888D-A43CBE505CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{083642B4-3D5E-4556-888D-A43CBE505CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBDC414F-23C1-4BE0-AFA7-280738E4CE0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBDC414F-23C1-4BE0-AFA7-280738E4CE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBDC414F-23C1-4BE0-AFA7-280738E4CE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBDC414F-23C1-4BE0-AFA7-280738E4CE0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06DD80A1-CD71-4C2C-8C46-552DA5A9682E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06DD80A1-CD71-4C2C-8C46-552DA5A9682E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06DD80A1-CD71-4C2C-8C46-552DA5A9682E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06DD80A1-CD71-4C2C-8C46-552DA5A9682E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
