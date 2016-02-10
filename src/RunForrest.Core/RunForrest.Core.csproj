@@ -40,18 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\TaskGroupAttribute.cs" />
+    <Compile Include="Model\TaskGroup.cs" />
     <Compile Include="Model\UserInput.cs" />
     <Compile Include="Model\RunForrestConfiguration.cs" />
-    <Compile Include="Model\TaskAttribute.cs" />
+    <Compile Include="Attributes\TaskAttribute.cs" />
     <Compile Include="Model\SwitchType.cs" />
     <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunForrest.cs" />
+    <Compile Include="Runners\ExecuteGroupTaskInstructions.cs" />
     <Compile Include="Runners\IExecuteInstructions.cs" />
     <Compile Include="Runners\ExecuteHelpInstructions.cs" />
     <Compile Include="Runners\ExecuteListInstructions.cs" />
-    <Compile Include="Runners\ExecuteTaskInstructions.cs" />
+    <Compile Include="Runners\ExecuteSingleTaskInstructions.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\IConfigureRunForrest.cs" />
     <Compile Include="Util\Instance.cs" />

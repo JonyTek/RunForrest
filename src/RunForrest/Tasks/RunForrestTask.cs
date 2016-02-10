@@ -1,4 +1,5 @@
 ﻿using System;
+using RunForrest.Core.Attributes;
 using RunForrest.Core.Model;
 
 namespace RunForrest.Tasks

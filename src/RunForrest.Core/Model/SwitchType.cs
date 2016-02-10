@@ -8,9 +8,13 @@
 
         Method = 2,
 
+        Group = 3,
+
         Verbose = 10,
 
         Timed = 11,
+
+        Parallel = 12,
 
         DisplayList = 20,
 

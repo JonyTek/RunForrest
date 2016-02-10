@@ -11,15 +11,18 @@ namespace RunForrest.Core.Model
 
         private readonly MethodInfo method;
 
+        internal int Priority { get; }
+
         private readonly ParameterInfo[] parameters;
 
         internal Task(Type type, MethodInfo method)
         {
             this.type = type;
-            this.method = method;
+            this.method = method;            
             this.parameters = method.GetParameters();
 
             Alias = method.GetTaskAlias();
+            Priority = method.GetTaskPriority();
             Description = method.GetTaskDescription();
         }
 

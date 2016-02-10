@@ -12,7 +12,7 @@ namespace RunForrest.Core.Model
             Instructions = new Dictionary<SwitchType, List<string>>();
         }
 
-        internal string TaskAlias { get; set; }
+        internal string Alias { get; set; }
 
         internal Dictionary<SwitchType, List<string>> Instructions;        
 
@@ -23,6 +23,10 @@ namespace RunForrest.Core.Model
         internal bool TimedMode => Instructions.ContainsKey(SwitchType.Timed);
 
         internal bool VerbodeMode => Instructions.ContainsKey(SwitchType.Verbose);
+
+        internal bool GroupMode => Instructions.ContainsKey(SwitchType.Group);
+
+        internal bool ParallelMode => Instructions.ContainsKey(SwitchType.Parallel);
 
         internal object[] ConstructorArguments
             => !Instructions.ContainsKey(SwitchType.Constructor)
@@ -44,7 +48,9 @@ namespace RunForrest.Core.Model
 
                 if (HelpMode) return new ExecuteHelpInstructions();
 
-                return new ExecuteTaskInstructions();
+                if(GroupMode) return new ExecuteGroupTaskInstructions();
+
+                return new ExecuteSingleTaskInstructions();
             }
         }
 

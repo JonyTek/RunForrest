@@ -14,14 +14,14 @@ namespace RunForrest.Core.Runners
                 throw new ArgumentException("Invalid arguments. -h cannot be used with any other switches.");
             }
 
-            if (string.IsNullOrEmpty(instructions.TaskAlias))
+            if (string.IsNullOrEmpty(instructions.Alias))
             {
                 Printer.PrintHelp();
 
                 return;
             }
 
-            var task = TaskCollection.Select(instructions.TaskAlias);
+            var task = TaskCollection.SelectTask(instructions.Alias);
 
             Printer.Info(task.UsageExample());
         }

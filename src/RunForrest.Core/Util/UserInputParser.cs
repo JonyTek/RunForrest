@@ -19,7 +19,7 @@ namespace RunForrest.Core.Util
 
             if (ToSwitchType(arguments[index]) == SwitchType.None)
             {
-                instructions.TaskAlias = arguments[index];
+                instructions.Alias = arguments[index];
                 index++;
             }
 
@@ -65,6 +65,12 @@ namespace RunForrest.Core.Util
                 case "-h":
                 case "-help":
                     return SwitchType.DisplayHelp;
+                case "-g":
+                case "-group":
+                    return SwitchType.Group;
+                case "-p":
+                case "-parra":
+                    return SwitchType.Parallel;
                 default:
                     return SwitchType.None;
             }

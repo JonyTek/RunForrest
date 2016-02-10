@@ -75,7 +75,7 @@ namespace RunForrest.Specs
             var input = new[] {"alias", "-m", "method1", "method2", "-c", "input1", "input2", "-v", "-t"};
             var instructions = UserInputParser.Parse(input);
 
-            Assert.That(instructions.Runner is ExecuteTaskInstructions, Is.True);
+            Assert.That(instructions.Runner is ExecuteSingleTaskInstructions, Is.True);
             Assert.That(instructions.Instructions[SwitchType.Timed], Is.EquivalentTo(new List<string>()));
             Assert.That(instructions.Instructions[SwitchType.Verbose], Is.EquivalentTo(new List<string>()));
             Assert.That(instructions.Instructions[SwitchType.Method], Is.EquivalentTo(new[] { "method1", "method2" }));

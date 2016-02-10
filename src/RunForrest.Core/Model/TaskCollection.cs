@@ -9,7 +9,9 @@ namespace RunForrest.Core.Model
     {
         private static readonly Dictionary<string, Task> Tasks = new Dictionary<string, Task>();
 
-        private static void Insert(string alias, Task task)
+        private static readonly Dictionary<string, TaskGroup> TaskGroups = new Dictionary<string, TaskGroup>();
+
+        private static void InsertTask(string alias, Task task)
         {
             var lowerAlias = alias.ToLower();
 
@@ -22,6 +24,19 @@ namespace RunForrest.Core.Model
             Tasks.Add(lowerAlias, task);
         }
 
+        private static void InsertTaskGroup(string alias, TaskGroup group)
+        {
+            var lowerAlias = alias.ToLower();
+
+            if (TaskGroups.ContainsKey(lowerAlias))
+            {
+                throw new InvalidOperationException(
+                    string.Format("Task group '{0}' with same alias already exists", alias));
+            }
+
+            TaskGroups.Add(lowerAlias, group);
+        }
+
         internal static void Initialise<T>(RunForrestConfiguration config)
         {
             var assemblies = new[] {typeof (T).Assembly}.ToList();
@@ -31,13 +46,18 @@ namespace RunForrest.Core.Model
                 assemblies.AddRange(config.AdditionalAssembliesToScanForTasks);
             }
 
-            foreach (var task in assemblies.SelectMany(x => x.ScanForTasks()))
+            foreach (var task in assemblies.SelectMany(x => x.ScanForSingleTasks()))
             {
-                Insert(task.Alias, task);
+                InsertTask(task.Alias, task);
+            }
+
+            foreach (var taskGroup in assemblies.SelectMany(x => x.ScanForTaskGroups()))
+            {
+                InsertTaskGroup(taskGroup.Alias, taskGroup);
             }
         }
 
-        internal static Task Select(string alias)
+        internal static Task SelectTask(string alias)
         {
             var lowerAlias = alias.ToLower();
 
@@ -50,20 +70,32 @@ namespace RunForrest.Core.Model
             return Tasks[lowerAlias];
         }
 
-        internal static bool ContainsAlias(string alias)
+        internal static TaskGroup SelectTaskGroup(string alias)
+        {
+            var lowerAlias = alias.ToLower();
+
+            if (!TaskGroups.ContainsKey(lowerAlias))
+            {
+                throw new KeyNotFoundException(
+                    string.Format("No task found by the alias of '{0}'", alias));
+            }
+
+            return TaskGroups[lowerAlias];
+        }
+
+        internal static bool ContainsTaskAlias(string alias)
         {
             return Tasks.ContainsKey(alias.ToLower());
         }
 
-        internal static void PrintList()
+        internal static Dictionary<string, Task> GetTasks()
         {
-            foreach (var task in Tasks.OrderBy(x => x.Key))
-            {
-                Printer.Info("alias - {0}\t\t{1}", task.Value.Alias, task.Value.Description);
-            }
+            return Tasks;
+        }
 
-            Printer.Info(string.Empty);
-            Printer.Info("<alias> -h for more details");
+        internal static Dictionary<string, TaskGroup> GetTaskGroups()
+        {
+            return TaskGroups;
         }
     }
 }

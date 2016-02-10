@@ -5,11 +5,11 @@ using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Runners
 {
-    internal class ExecuteTaskInstructions : IExecuteInstructions
+    internal class ExecuteSingleTaskInstructions : IExecuteInstructions
     {
         public void Execute(UserInput instructions)
         {
-            if (string.IsNullOrEmpty(instructions.TaskAlias))
+            if (string.IsNullOrEmpty(instructions.Alias))
             {
                 throw new ArgumentException("Invalid arguments. Please specify as task alias.");
             }
@@ -24,7 +24,7 @@ namespace RunForrest.Core.Runners
 
             try
             {
-                TaskCollection.Select(instructions.TaskAlias)
+                TaskCollection.SelectTask(instructions.Alias)
                     .Execute(instructions.ConstructorArguments, instructions.MethodArguments);
             }
             finally

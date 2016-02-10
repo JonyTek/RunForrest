@@ -46,7 +46,9 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\LifeIsLikeTask.cs" />
     <Compile Include="Tasks\RunForrestTask.cs" />
+    <Compile Include="Tasks\TaskGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

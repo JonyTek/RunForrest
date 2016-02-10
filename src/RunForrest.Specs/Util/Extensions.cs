@@ -12,7 +12,7 @@ namespace RunForrest.Specs.Util
         {
             TaskCollection.Initialise<Tasks>(RunForrestConfiguration.Instance);
 
-            var signature = TaskCollection.Select("mytask").MethodSignature;
+            var signature = TaskCollection.SelectTask("mytask").MethodSignature;
 
             Assert.That(signature, Is.EqualTo("public Void MyTask(String input){ }"));
         }
