@@ -32,17 +32,21 @@ namespace RunForrest.Core.Model
 
         public bool ReturnsValue => method.ReturnType.Name == "Void";
 
-        public string UsageExample()
+        public string UsageExample
         {
-            var usage = string.Empty;
-
-            if (parameters.Any())
+            get
             {
-                usage = "-m <";
-                usage = parameters.ToArray().Aggregate(usage, (current, parameter) => current + (parameter.Name + "> "));
-            }
+                var usage = string.Empty;
 
-            return string.Format("<appname> {0} {1}", method.GetTaskAlias(), usage);
+                if (parameters.Any())
+                {
+                    usage = "-m <";
+                    usage = parameters.ToArray()
+                        .Aggregate(usage, (current, parameter) => current + (parameter.Name + "> "));
+                }
+
+                return string.Format("<appname> {0} {1}", method.GetTaskAlias(), usage);
+            }
         }
 
         internal string MethodSignature

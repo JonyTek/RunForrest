@@ -23,7 +23,7 @@ namespace RunForrest.Core.Runners
 
             var task = TaskCollection.SelectTask(instructions.Alias);
 
-            Printer.Info(task.UsageExample());
+            Printer.Info(task.UsageExample);
         }
     }
 }
