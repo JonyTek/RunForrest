@@ -33,16 +33,15 @@ namespace RunForrest.Core.Model
 
         internal void Execute(object[] constructorArgs = null, object[] methodArgs = null)
         {
-            if (TaskHooks.OnBeforeEachTask != null) TaskHooks.OnBeforeEachTask(this);
+            RunForrestConfiguration.Instance.OnBeforeEachTask(this);
 
             Console.ForegroundColor = ConsoleColor.Green;
 
             var returnValue = method.Invoke(Instance.Create(type, constructorArgs), methodArgs);
 
-            if (TaskHooks.OnAfterEachTask != null) TaskHooks.OnAfterEachTask(this, returnValue);
+            RunForrestConfiguration.Instance.OnAfterEachTask(this, returnValue);
 
             Console.ForegroundColor = ConsoleColor.Gray;
         }
-
     }
 }

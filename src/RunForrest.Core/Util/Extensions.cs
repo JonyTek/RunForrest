@@ -10,27 +10,31 @@ namespace RunForrest.Core.Util
     {
         internal static string GetTaskAlias(this MethodInfo method)
         {
-            var alias = method.GetCustomAttribute<RunnableAttribute>().Alias ?? method.Name;
+            var alias = method.GetCustomAttribute<TaskAttribute>().Alias ?? method.Name;
 
             return alias.ToLower();
         }
 
         internal static string GetTaskDescription(this MethodInfo method)
         {
-            return method.GetCustomAttribute<RunnableAttribute>().Description;
+            return method.GetCustomAttribute<TaskAttribute>().Description;
         }
 
         internal static IEnumerable<Task> ScanForTasks(this Assembly assembly)
         {
             return from type in assembly.GetTypes()
-                from method in type.GetMethods()
-                where method.IsRunnable()
+                from method in type.GetMethods().Where(x => x.IsTask())
                 select Task.Create(type, method);
         }
 
-        internal static bool IsRunnable(this MethodInfo method)
+        internal static bool IsTask(this MethodInfo method)
         {
-            return Attribute.IsDefined(method, typeof (RunnableAttribute));
+            return Attribute.IsDefined(method, typeof (TaskAttribute));
+        }
+
+        internal static IEnumerable<Type> GetConfigurations(this Assembly assembly)
+        {
+            return assembly.GetTypes().Where(x => typeof (IConfigureRunForrest).IsAssignableFrom(x));
         }
 
         internal static string Signature(this MethodInfo method)

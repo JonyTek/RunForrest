@@ -5,7 +5,7 @@ namespace RunForrest.Specs
 {
     public class Tasks
     {
-        [Runnable("mytask")]
+        [Task("mytask")]
         public void MyTask(string input)
         {
         }

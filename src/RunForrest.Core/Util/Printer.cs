@@ -28,6 +28,18 @@ namespace RunForrest.Core.Util
             Info(string.Format(format, args));
         }
 
+        public static void Print(ConsoleColor color, string output)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(output);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        public static void Print(ConsoleColor color, string format, params object[] args)
+        {
+            Info(string.Format(format, args));
+        }
+
         public static void Error(string output)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;

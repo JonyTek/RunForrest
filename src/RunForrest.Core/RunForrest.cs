@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 
@@ -10,8 +11,10 @@ namespace RunForrest.Core
             where T : class
         {
             try
-            {
-                TaskCollection.Initialise<T>();
+            { 
+                var config = TryConfigureApplication<T>();
+
+                TaskCollection.Initialise<T>(config);
 
                 InstructionBuilder.Build(arguments).Execute();
             }
@@ -21,14 +24,20 @@ namespace RunForrest.Core
             }
         }
 
-        public static void OnBeforeEachTask(Action<Task> onBeforeEachTask)
+        private static RunForrestConfiguration TryConfigureApplication<T>()
         {
-            TaskHooks.OnBeforeEachTask = onBeforeEachTask;
-        }
+            var configuration = RunForrestConfiguration.Instance;
+            var configurations = typeof(T).Assembly.GetConfigurations().ToArray();
 
-        public static void OnAfterEachTask(Action<Task, object> onAfterEachTask)
-        {
-            TaskHooks.OnAfterEachTask = onAfterEachTask;
+            if (!configurations.Any()) return configuration;
+
+            Validate.Configuartions(configurations);
+
+            var configurer = Instance.Create(configurations.First(), null) as IConfigureRunForrest;
+
+            configurer.Configure(configuration);
+
+            return configuration;
         }
     }
 }

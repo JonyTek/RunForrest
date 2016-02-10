@@ -23,7 +23,7 @@ namespace RunForrest.Core.Runners
 
             try
             {
-                var task = TaskCollection.Get(instructions.TaskAlias);
+                var task = TaskCollection.Select(instructions.TaskAlias);
 
                 task.Execute(instructions.ConstructorArguments, instructions.MethodArguments);
             }

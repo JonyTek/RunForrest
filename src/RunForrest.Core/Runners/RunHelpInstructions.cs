@@ -20,7 +20,7 @@ namespace RunForrest.Core.Runners
                 return;
             }
 
-            var task = TaskCollection.Get(instructions.TaskAlias);
+            var task = TaskCollection.Select(instructions.TaskAlias);
 
             Printer.Info("Alias: {0}\t", task.Alias);
             Printer.Info("Desc:  {0}\t", task.Description);

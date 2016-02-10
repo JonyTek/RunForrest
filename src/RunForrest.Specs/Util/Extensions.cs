@@ -10,8 +10,9 @@ namespace RunForrest.Specs.Util
         [Test]
         public void ShouldPrintMethodInfo()
         {
-            TaskCollection.Initialise<Tasks>();
-            var signature = TaskCollection.Get("mytask").Signature;
+            TaskCollection.Initialise<Tasks>(RunForrestConfiguration.Instance);
+
+            var signature = TaskCollection.Select("mytask").Signature;
 
             Assert.That(signature, Is.EqualTo("Void MyTask(String input)"));
         }

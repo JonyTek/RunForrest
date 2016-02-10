@@ -3,9 +3,9 @@
 namespace RunForrest.Core.Model
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class RunnableAttribute : Attribute
+    public class TaskAttribute : Attribute
     {
-        public RunnableAttribute(string alias = null, string description = null)
+        public TaskAttribute(string alias = null, string description = null)
         {
             Alias = alias;
             Description = description ?? "<No Description>";

@@ -41,7 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ApplicationInstructions.cs" />
-    <Compile Include="Model\RunnableAttribute.cs" />
+    <Compile Include="Model\RunForrestConfiguration.cs" />
+    <Compile Include="Model\TaskAttribute.cs" />
     <Compile Include="Model\SwitchType.cs" />
     <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\Task.cs" />
@@ -52,10 +53,10 @@
     <Compile Include="Runners\RunListInstructions.cs" />
     <Compile Include="Runners\RunTaskInstructions.cs" />
     <Compile Include="Util\Extensions.cs" />
+    <Compile Include="Util\IConfigureRunForrest.cs" />
     <Compile Include="Util\Instance.cs" />
     <Compile Include="Util\InstructionBuilder.cs" />
     <Compile Include="Util\Printer.cs" />
-    <Compile Include="Util\TaskHooks.cs" />
     <Compile Include="Util\Validate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

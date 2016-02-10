@@ -9,34 +9,42 @@ namespace RunForrest.Core.Model
     {
         private static readonly Dictionary<string, Task> Tasks = new Dictionary<string, Task>();
 
-        private static void Add(string alias, Task task)
+        private static void Insert(string alias, Task task)
         {
             var lowerAlias = alias.ToLower();
 
             if (Tasks.ContainsKey(lowerAlias))
             {
-                throw new InvalidOperationException(string.Format("Task '{0}' with same alias already exists", alias));
+                throw new InvalidOperationException(
+                    string.Format("Task '{0}' with same alias already exists", alias));
             }
 
             Tasks.Add(lowerAlias, task);
         }
 
-        internal static void Initialise<T>()
+        internal static void Initialise<T>(RunForrestConfiguration config)
         {
-            var assembly = typeof (T).Assembly;
-            foreach (var task in assembly.ScanForTasks())
+            var assemblies = new[] {typeof (T).Assembly}.ToList();
+
+            if (config.AdditionalAssembliesToScanForTasks != null)
             {
-                Add(task.Alias, task);
+                assemblies.AddRange(config.AdditionalAssembliesToScanForTasks);
+            }
+
+            foreach (var task in assemblies.SelectMany(x => x.ScanForTasks()))
+            {
+                Insert(task.Alias, task);
             }
         }
 
-        internal static Task Get(string alias)
+        internal static Task Select(string alias)
         {
             var lowerAlias = alias.ToLower();
 
             if (!Tasks.ContainsKey(lowerAlias))
             {
-                throw new KeyNotFoundException(string.Format("No task found by the alias of '{0}'", alias));
+                throw new KeyNotFoundException(
+                    string.Format("No task found by the alias of '{0}'", alias));
             }
 
             return Tasks[lowerAlias];
