@@ -23,8 +23,9 @@ namespace RunForrest.Core.Util
         internal static IEnumerable<Task> ScanForTasks(this Assembly assembly)
         {
             return from type in assembly.GetTypes()
-                from method in type.GetMethods().Where(x => x.IsTask())
-                select Task.Create(type, method);
+                from method in type.GetMethods()
+                where method.IsTask()
+                select new Task(type, method);
         }
 
         internal static bool IsTask(this MethodInfo method)
@@ -35,16 +36,6 @@ namespace RunForrest.Core.Util
         internal static IEnumerable<Type> GetConfigurations(this Assembly assembly)
         {
             return assembly.GetTypes().Where(x => typeof (IConfigureRunForrest).IsAssignableFrom(x));
-        }
-
-        internal static string Signature(this MethodInfo method)
-        {
-            var parameters = from x in method.GetParameters()
-                select string.Format("{0} {1}",
-                    x.ParameterType.Name, x.Name);
-
-            return string.Format("{0} {1}({2})",
-                method.ReturnType.Name, method.Name, string.Join(", ", parameters));
         }
     }
 }

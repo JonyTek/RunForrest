@@ -1,6 +1,6 @@
 ﻿namespace RunForrest.Core.Model
 {
-    public enum SwitchType
+    internal enum SwitchType
     {
         None = 0,
 

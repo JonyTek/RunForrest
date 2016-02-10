@@ -12,11 +12,11 @@ namespace RunForrest.Core
         {
             try
             { 
-                var config = TryConfigureApplication<T>();
+                var setup = TryConfigureApplication<T>();
 
-                TaskCollection.Initialise<T>(config);
+                TaskCollection.Initialise<T>(setup);
 
-                InstructionBuilder.Build(arguments).Execute();
+                UserInputParser.Parse(arguments).Execute();
             }
             catch (Exception ex)
             {
@@ -26,18 +26,17 @@ namespace RunForrest.Core
 
         private static RunForrestConfiguration TryConfigureApplication<T>()
         {
-            var configuration = RunForrestConfiguration.Instance;
             var configurations = typeof(T).Assembly.GetConfigurations().ToArray();
 
-            if (!configurations.Any()) return configuration;
+            if (!configurations.Any()) return RunForrestConfiguration.Instance;
 
             Validate.Configuartions(configurations);
 
             var configurer = Instance.Create(configurations.First(), null) as IConfigureRunForrest;
 
-            configurer.Configure(configuration);
+            configurer.Setup(RunForrestConfiguration.Instance);
 
-            return configuration;
+            return RunForrestConfiguration.Instance; 
         }
     }
 }

@@ -5,9 +5,9 @@ using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Runners
 {
-    internal class RunTaskInstructions : IRunInstructions
+    internal class ExecuteTaskInstructions : IExecuteInstructions
     {
-        public void Run(ApplicationInstructions instructions)
+        public void Execute(UserInput instructions)
         {
             if (string.IsNullOrEmpty(instructions.TaskAlias))
             {
@@ -15,23 +15,23 @@ namespace RunForrest.Core.Runners
             }
 
             var sw = Stopwatch.StartNew();
+            var isTimedMode = instructions.TimedMode || RunForrestConfiguration.Instance.IsTimedMode;
 
-            if (instructions.TimedMode)
+            if (isTimedMode)
             {
                 Printer.Info("Starting execution at: {0}", DateTime.Now.ToString("O"));
             }
 
             try
             {
-                var task = TaskCollection.Select(instructions.TaskAlias);
-
-                task.Execute(instructions.ConstructorArguments, instructions.MethodArguments);
+                TaskCollection.Select(instructions.TaskAlias)
+                    .Execute(instructions.ConstructorArguments, instructions.MethodArguments);
             }
             finally
             {
                 sw.Stop();
 
-                if (instructions.TimedMode)
+                if (isTimedMode)
                 {
                     Printer.Info("Finished execution at: {0}", DateTime.Now.ToString("O"));
                     Printer.Info("Total execution time: {0}ms", sw.ElapsedMilliseconds);

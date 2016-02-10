@@ -3,9 +3,9 @@ using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Runners
 {
-    internal class RunListInstructions : IRunInstructions
+    internal class ExecuteListInstructions : IExecuteInstructions
     {
-        public void Run(ApplicationInstructions instructions)
+        public void Execute(UserInput instructions)
         {
             if (!string.IsNullOrEmpty(instructions.TaskAlias))
             {

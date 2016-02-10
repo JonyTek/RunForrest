@@ -59,8 +59,11 @@ namespace RunForrest.Core.Model
         {
             foreach (var task in Tasks.OrderBy(x => x.Key))
             {
-                Printer.Info("Alias: {0}\tDesc: {1}", task.Value.Alias, task.Value.Description);
+                Printer.Info("alias - {0}\t\t{1}", task.Value.Alias, task.Value.Description);
             }
+
+            Printer.Info(string.Empty);
+            Printer.Info("<alias> -h for more details");
         }
     }
 }

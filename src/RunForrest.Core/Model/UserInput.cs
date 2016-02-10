@@ -5,9 +5,9 @@ using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Model
 {
-    internal class ApplicationInstructions
+    internal class UserInput
     {
-        internal ApplicationInstructions()
+        internal UserInput()
         {
             Instructions = new Dictionary<SwitchType, List<string>>();
         }
@@ -24,27 +24,27 @@ namespace RunForrest.Core.Model
 
         internal bool VerbodeMode => Instructions.ContainsKey(SwitchType.Verbose);
 
-        internal string[] ConstructorArguments
+        internal object[] ConstructorArguments
             => !Instructions.ContainsKey(SwitchType.Constructor)
                 ? null
                 : Instructions[SwitchType.Constructor]
                     .ToArray();
 
-        internal string[] MethodArguments
+        internal object[] MethodArguments
             => !Instructions.ContainsKey(SwitchType.Method)
                 ? null
                 : Instructions[SwitchType.Method]
                     .ToArray();
 
-        internal IRunInstructions Runner
+        internal IExecuteInstructions Runner
         {
             get
             {
-                if (ListMode) return new RunListInstructions();
+                if (ListMode) return new ExecuteListInstructions();
 
-                if (HelpMode) return new RunHelpInstructions();
+                if (HelpMode) return new ExecuteHelpInstructions();
 
-                return new RunTaskInstructions();
+                return new ExecuteTaskInstructions();
             }
         }
 
@@ -52,18 +52,11 @@ namespace RunForrest.Core.Model
         {
             try
             {
-                Runner.Run(this);
+                Runner.Execute(this);
             }
             catch (Exception ex)
             {
-                if (VerbodeMode)
-                {
-                    Printer.Error(ex);
-                }
-                else
-                {
-                    Printer.Error(ex.InnerException.Message);
-                }
+               Printer.Error(ex, VerbodeMode);
             }
         }
     }

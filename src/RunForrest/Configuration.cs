@@ -4,9 +4,9 @@ using RunForrest.Core.Util;
 
 namespace RunForrest
 {
-    public class Configuration : IConfigureRunForrest<Configuration>
+    public class Configuration : IConfigureRunForrest
     {
-        public void Configure(RunForrestConfiguration configuration)
+        public void Setup(RunForrestConfiguration configuration)
         {
             configuration.OnBeforeEachTask = task =>
             {
@@ -15,11 +15,11 @@ namespace RunForrest
 
             configuration.OnAfterEachTask = (task, returnValue) =>
             {
-                Printer.Print(ConsoleColor.DarkGreen, "Completed {0}", task.Alias);
                 if (returnValue != null)
                 {
-                    Printer.Print(ConsoleColor.Blue, "Completed with return value:  {0}", returnValue);
+                    Printer.Print(ConsoleColor.Blue, "{0}", returnValue);
                 }
+                Printer.Print(ConsoleColor.DarkGreen, "Completed {0}", task.Alias);
             };
 
             configuration.IsTimedMode = true;

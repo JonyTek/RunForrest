@@ -1,4 +1,5 @@
 ﻿using System;
+using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
@@ -11,7 +12,7 @@ namespace RunForrest.Core.Util
 
         public static void Info(string output)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine(output);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
@@ -23,11 +24,6 @@ namespace RunForrest.Core.Util
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public static void Error(string format, params object[] args)
-        {
-            Info(string.Format(format, args));
-        }
-
         public static void Print(ConsoleColor color, string output)
         {
             Console.ForegroundColor = color;
@@ -37,7 +33,12 @@ namespace RunForrest.Core.Util
 
         public static void Print(ConsoleColor color, string format, params object[] args)
         {
-            Info(string.Format(format, args));
+            Print(color, string.Format(format, args));
+        }
+
+        public static void Error(string format, params object[] args)
+        {
+            Error(string.Format(format, args));
         }
 
         public static void Error(string output)
@@ -45,6 +46,19 @@ namespace RunForrest.Core.Util
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(output);
             Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        internal static void Error(Exception ex, bool verbodeMode)
+        {
+            var displayFullError = verbodeMode || RunForrestConfiguration.Instance.IsVerbodeMode;
+            if (displayFullError)
+            {
+                Error(ex);
+            }
+            else
+            {
+                Error(ex.InnerException?.Message ?? ex.Message);
+            }
         }
 
         internal static void PrintHelp()

@@ -5,13 +5,13 @@ namespace RunForrest.Tasks
 {
     public class RunForrestTask
     {
-        [Task("run", "Run Forrest, run!!")]
+        [Task("run")]
         public void RunTask()
         {
             Console.WriteLine("Run Forrest, run!");
         }
 
-        [Task("dowhat", "Run Forrest, run!!")]
+        [Task("dowhat")]
         public void DoWhatTask(string verb)
         {
             Console.WriteLine("Run Forrest, {0}!", verb);

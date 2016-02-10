@@ -3,12 +3,12 @@ using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
-    internal class InstructionBuilder
+    internal class UserInputParser
     {
-        internal static ApplicationInstructions Build(string[] arguments)
+        internal static UserInput Parse(string[] arguments)
         {
             var index = 0;
-            var instructions = new ApplicationInstructions();
+            var instructions = new UserInput();
 
             if (arguments.Length == 0)
             {

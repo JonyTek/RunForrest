@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using RunForrest.Core.Util;
 
@@ -6,29 +7,52 @@ namespace RunForrest.Core.Model
 {
     public class Task
     {
-        private Type type;
+        private readonly Type type;
 
-        private MethodInfo method;
+        private readonly MethodInfo method;
 
-        private Task()
+        private readonly ParameterInfo[] parameters;
+
+        internal Task(Type type, MethodInfo method)
         {
-        }
+            this.type = type;
+            this.method = method;
+            this.parameters = method.GetParameters();
 
-        public string Signature => method.Signature();
+            Alias = method.GetTaskAlias();
+            Description = method.GetTaskDescription();
+        }
 
         public string Alias { get; private set; }
 
         public string Description { get; private set; }
 
-        internal static Task Create(Type type, MethodInfo method)
+        public bool ReturnsValue => method.ReturnType.Name == "Void";
+
+        public string UsageExample()
         {
-            return new Task
+            var usage = string.Empty;
+
+            if (parameters.Any())
             {
-                type = type,
-                method = method,
-                Alias = method.GetTaskAlias(),
-                Description = method.GetTaskDescription()
-            };
+                usage = "-m <";
+                usage = parameters.ToArray().Aggregate(usage, (current, parameter) => current + (parameter.Name + "> "));
+            }
+
+            return string.Format("<appname> {0} {1}", method.GetTaskAlias(), usage);
+        }
+
+        internal string MethodSignature
+        {
+            get
+            {
+                var parmters = from x in parameters.ToList()
+                    select string.Format("{0} {1}",
+                        x.ParameterType.Name, x.Name);
+
+                return string.Format("public {0} {1}({2}){{ }}",
+                    method.ReturnType.Name, method.Name, string.Join(", ", parmters));
+            }
         }
 
         internal void Execute(object[] constructorArgs = null, object[] methodArgs = null)

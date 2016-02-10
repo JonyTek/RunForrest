@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Linq;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Runners
 {
-    internal class RunHelpInstructions : IRunInstructions
+    internal class ExecuteHelpInstructions : IExecuteInstructions
     {
-        public void Run(ApplicationInstructions instructions)
+        public void Execute(UserInput instructions)
         {
             if (instructions.Instructions.Keys.Count > 1)
             {
@@ -22,9 +23,7 @@ namespace RunForrest.Core.Runners
 
             var task = TaskCollection.Select(instructions.TaskAlias);
 
-            Printer.Info("Alias: {0}\t", task.Alias);
-            Printer.Info("Desc:  {0}\t", task.Description);
-            Printer.Info("Sign:  {0}\t", task.Signature);
+            Printer.Info(task.UsageExample());
         }
     }
 }
