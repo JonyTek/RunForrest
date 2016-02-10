@@ -77,7 +77,7 @@ namespace RunForrest.Core.Model
             if (!TaskGroups.ContainsKey(lowerAlias))
             {
                 throw new KeyNotFoundException(
-                    string.Format("No task found by the alias of '{0}'", alias));
+                    string.Format("No task group found by the alias of '{0}'", alias));
             }
 
             return TaskGroups[lowerAlias];

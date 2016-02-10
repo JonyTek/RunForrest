@@ -17,13 +17,6 @@ namespace RunForrest.Core.Util
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public static void Error(Exception ex)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(ex);
-            Console.ForegroundColor = ConsoleColor.Gray;
-        }
-
         public static void Print(ConsoleColor color, string output)
         {
             Console.ForegroundColor = color;
@@ -45,6 +38,13 @@ namespace RunForrest.Core.Util
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(output);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        public static void Error(Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(ex);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 
@@ -24,6 +26,7 @@ namespace RunForrest
 
             configuration.IsTimedMode = true;
             configuration.IsVerbodeMode = true;
+            configuration.AdditionalAssembliesToScanForTasks = new List<Assembly>();
         }
     }
 }
