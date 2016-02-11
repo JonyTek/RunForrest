@@ -14,8 +14,8 @@ namespace RunForrest.Core.Util
         {
             this.configuration = configuration;
 
-            consoleInstructions = new ConsoleInstructionParser(arguments).ParseInstructions();
-            configInstructions = new ConfigurationInstructionParser(configuration).ParseInstructions();
+            consoleInstructions = new ConsoleInstructionMapper(arguments).ParseInstructions();
+            configInstructions = new ConfigurationInstructionMapper(configuration).ParseInstructions();
         }
 
         private void UpdateFor(InstructionType instructionType, ApplicationInstructions instructions)
@@ -44,6 +44,13 @@ namespace RunForrest.Core.Util
                                 InstructionsFrom = InstructionsFrom.Configuration
                             });
 
+            MapFields(instructions);
+
+            return instructions;
+        }
+
+        private void MapFields(ApplicationInstructions instructions)
+        {
             UpdateFor(InstructionType.DisplayHelp, instructions);
             UpdateFor(InstructionType.DisplayList, instructions);
             UpdateFor(InstructionType.Constructor, instructions);
@@ -51,8 +58,6 @@ namespace RunForrest.Core.Util
             UpdateFor(InstructionType.Group, instructions);
             UpdateFor(InstructionType.Timed, instructions);
             UpdateFor(InstructionType.Verbose, instructions);
-
-            return instructions;
         }
     }
 }

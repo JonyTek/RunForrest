@@ -14,7 +14,7 @@ namespace RunForrest.Core.Util
             {
                 var message =
                     string.Format(
-                        "Failed to create type '{0}', please ensure you provide correct instantiation parameters",
+                        "Failed to create type '{0}', please ensure you provide correct constructor arguments. -c arg0 arg1",
                         type.FullName);
 
                 throw new MissingMethodException(message, ex);

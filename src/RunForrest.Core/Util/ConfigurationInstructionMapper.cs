@@ -3,11 +3,11 @@ using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
-    internal class ConfigurationInstructionParser : IParseInstructions
+    internal class ConfigurationInstructionMapper : IParseInstructions
     {
         private readonly RunForrestConfiguration configuration;
 
-        internal ConfigurationInstructionParser(RunForrestConfiguration configuration)
+        internal ConfigurationInstructionMapper(RunForrestConfiguration configuration)
         {
             this.configuration = configuration;
         }

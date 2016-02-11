@@ -83,11 +83,6 @@ namespace RunForrest.Core.Model
             return TaskGroups[lowerAlias];
         }
 
-        internal static bool ContainsTaskAlias(string alias)
-        {
-            return Tasks.ContainsKey(alias.ToLower());
-        }
-
         internal static Dictionary<string, Task> GetTasks()
         {
             return Tasks;

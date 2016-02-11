@@ -3,11 +3,11 @@ using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
-    internal class ConsoleInstructionParser : IParseInstructions
+    internal class ConsoleInstructionMapper : IParseInstructions
     {
         private readonly string[] arguments;
 
-        internal ConsoleInstructionParser(string[] arguments)
+        internal ConsoleInstructionMapper(string[] arguments)
         {
             this.arguments = arguments;
         }
@@ -30,15 +30,14 @@ namespace RunForrest.Core.Util
 
             for (; index < arguments.Length; index++)
             {
-                if (arguments[index].IsASwitch())
+                if (!arguments[index].IsASwitch()) continue;
+
+                set.Instructions.Add(new Instruction
                 {
-                    set.Instructions.Add(new Instruction
-                    {
-                        InstructionsFrom = InstructionsFrom.Console,
-                        InstructionType = arguments[index].ToInstructionType(),
-                        Arguments = arguments.Skip(index + 1).TakeWhile(x => !x.IsASwitch()),
-                    });
-                }
+                    InstructionsFrom = InstructionsFrom.Console,
+                    InstructionType = arguments[index].ToInstructionType(),
+                    Arguments = arguments.Skip(index + 1).TakeWhile(x => !x.IsASwitch()),
+                });
             }
 
             return set;
