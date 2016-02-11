@@ -9,7 +9,7 @@ namespace RunForrest.Core.Runners
     {
         public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
         {
-            if (string.IsNullOrEmpty(instructions.ExecuteAlias))
+            if (string.IsNullOrEmpty(instructions.ExecuteAlias.Alias))
             {
                 throw new ArgumentException("Invalid arguments. Please specify as task alias.");
             }
@@ -24,7 +24,7 @@ namespace RunForrest.Core.Runners
 
             try
             {
-                var task = TaskCollection.SelectTask(instructions.ExecuteAlias);
+                var task = TaskCollection.SelectTask(instructions.ExecuteAlias.Alias);
                 task.Execute(configuration, instructions.ConstructorArguments, instructions.MethodArguments);
             }
             finally

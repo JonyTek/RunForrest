@@ -12,6 +12,10 @@ namespace RunForrest.Core.Model
         {
             ConsoleColor = ConsoleColor.DarkGreen;
 
+            MethodArguments = new string[0];
+            ConstructorArguments = new string[0];
+            AdditionalAssembliesToScanForTasks = new Assembly[0];
+
             OnBeforeEachTask = task => { };
             OnAfterEachTask = (task, returnValue) => { };
         }
@@ -26,11 +30,15 @@ namespace RunForrest.Core.Model
 
         public bool IsVerbodeMode { internal get; set; }
 
+        public string[] ConstructorArguments { internal get; set; }
+
+        public string[] MethodArguments { internal get; set; }
+
         public Action<Task> OnBeforeEachTask { internal get; set; }
 
         public Action<Task, object> OnAfterEachTask { internal get; set; }
 
-        public IEnumerable<Assembly> AdditionalAssembliesToScanForTasks { internal get; set; }
+        public Assembly[] AdditionalAssembliesToScanForTasks { internal get; set; }
 
         internal static RunForrestConfiguration ConfigureApp<T>()
             where T : class 

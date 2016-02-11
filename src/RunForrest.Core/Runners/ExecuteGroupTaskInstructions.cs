@@ -10,12 +10,12 @@ namespace RunForrest.Core.Runners
     {
         public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
         {
-            if (string.IsNullOrEmpty(instructions.ExecuteAlias))
+            if (string.IsNullOrEmpty(instructions.ExecuteAlias.Alias))
             {
                 throw new ArgumentException("Invalid arguments. Please specify as task alias.");
             }
 
-            var taskCollection = TaskCollection.SelectTaskGroup(instructions.ExecuteAlias);
+            var taskCollection = TaskCollection.SelectTaskGroup(instructions.ExecuteAlias.Alias);
 
             var sw = Stopwatch.StartNew();
             var isTimedMode = instructions.TimedMode || configuration.IsTimedMode;

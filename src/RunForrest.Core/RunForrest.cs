@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 
@@ -18,7 +17,9 @@ namespace RunForrest.Core
 
                 TaskCollection.Initialise<T>(config);
 
-                InstructionParser.ParseInstructions(arguments, config).Run();
+                var instructions = new InstructionBuilder(arguments, config).Build();
+                
+                instructions.Run();
             }
             catch (Exception ex)
             {

@@ -9,12 +9,12 @@ namespace RunForrest.Core.Runners
     {
         public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
         {
-            if (!string.IsNullOrEmpty(instructions.ExecuteAlias))
+            if (!string.IsNullOrEmpty(instructions.ExecuteAlias.Alias) && instructions.ExecuteAlias.InstructionsFrom == InstructionsFrom.Console)
             {
                 throw new ArgumentException("Invalid arguments. Cannot list a task.");
             }
 
-            if (instructions.Instructions.Keys.Count > 1)
+            if (instructions.Instructions.Values.Count(x => x.InstructionsFrom == InstructionsFrom.Console) > 1)
             {
                 throw new ArgumentException("Invalid arguments. -l cannot be used with any other switches.");
             }

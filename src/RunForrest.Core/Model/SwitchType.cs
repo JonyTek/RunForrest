@@ -1,6 +1,6 @@
 ﻿namespace RunForrest.Core.Model
 {
-    internal enum SwitchType
+    internal enum InstructionType
     {
         None = 0,
 

@@ -42,6 +42,11 @@
   <ItemGroup>
     <Compile Include="Attributes\TaskGroupAttribute.cs" />
     <Compile Include="Model\ApplicationMode.cs" />
+    <Compile Include="Model\ExecuteAlias.cs" />
+    <Compile Include="Model\Instruction.cs" />
+    <Compile Include="Model\InstructionSet.cs" />
+    <Compile Include="Model\InstructionsFrom.cs" />
+    <Compile Include="Model\IParseInstructions.cs" />
     <Compile Include="Model\TaskGroup.cs" />
     <Compile Include="Model\ApplicationInstructions.cs" />
     <Compile Include="Model\RunForrestConfiguration.cs" />
@@ -52,15 +57,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunForrest.cs" />
     <Compile Include="Runners\ExecuteGroupTaskInstructions.cs" />
+    <Compile Include="Runners\ExecuteNullInstructions.cs" />
     <Compile Include="Runners\IExecuteInstructions.cs" />
     <Compile Include="Runners\ExecuteHelpInstructions.cs" />
     <Compile Include="Runners\ExecuteListInstructions.cs" />
     <Compile Include="Runners\ExecuteSingleTaskInstructions.cs" />
+    <Compile Include="Util\BoolExtension.cs" />
+    <Compile Include="Util\ConfigurationInstructionParser.cs" />
+    <Compile Include="Util\ConsoleInstructionParser.cs" />
+    <Compile Include="Util\InstructionBuilder.cs" />
     <Compile Include="Util\ReflectionExtensions.cs" />
     <Compile Include="Util\IConfigureRunForrest.cs" />
     <Compile Include="Util\Instance.cs" />
     <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="Util\InstructionParser.cs" />
     <Compile Include="Util\Printer.cs" />
     <Compile Include="Util\Validate.cs" />
   </ItemGroup>

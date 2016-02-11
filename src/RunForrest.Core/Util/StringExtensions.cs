@@ -1,40 +1,46 @@
-﻿using RunForrest.Core.Model;
+﻿using System;
+using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
     internal static class StringExtensions
     {
-        internal static SwitchType ToSwitchType(this string argument)
+        internal static InstructionType ToInstructionType(this string argument)
         {
             switch (argument.ToLower())
             {
                 case "-c":
                 case "-constructor":
-                    return SwitchType.Constructor;
+                    return InstructionType.Constructor;
                 case "-m":
                 case "-method":
-                    return SwitchType.Method;
+                    return InstructionType.Method;
                 case "-v":
                 case "-verbose":
-                    return SwitchType.Verbose;
+                    return InstructionType.Verbose;
                 case "-t":
                 case "-timed":
-                    return SwitchType.Timed;
+                    return InstructionType.Timed;
                 case "-l":
                 case "-list":
-                    return SwitchType.DisplayList;
+                    return InstructionType.DisplayList;
                 case "-h":
                 case "-help":
-                    return SwitchType.DisplayHelp;
+                    return InstructionType.DisplayHelp;
                 case "-g":
                 case "-group":
-                    return SwitchType.Group;
+                    return InstructionType.Group;
                 case "-p":
                 case "-parra":
-                    return SwitchType.Parallel;
+                    return InstructionType.Parallel;
                 default:
-                    return SwitchType.None;
+                    return InstructionType.None;
             }
+        }
+
+        internal static bool IsASwitch(this string argument)
+        {
+            return argument.ToInstructionType() != InstructionType.None;
         }
     }
 }

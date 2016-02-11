@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using RunForrest.Core.Runners;
 using RunForrest.Core.Util;
 
@@ -12,50 +13,71 @@ namespace RunForrest.Core.Model
         internal ApplicationInstructions(RunForrestConfiguration configuration)
         {
             this.configuration = configuration;
-            Instructions = new Dictionary<SwitchType, List<string>>();
+            Instructions = new Dictionary<InstructionType, Instruction>();
         }
 
-        internal string ExecuteAlias { get; set; }
+        internal ExecuteAlias ExecuteAlias { get; set; }
 
-        internal Dictionary<SwitchType, List<string>> Instructions;        
+        internal Dictionary<InstructionType, Instruction> Instructions;        
 
-        internal bool ListMode => Instructions.ContainsKey(SwitchType.DisplayList);
+        internal bool TimedMode => Instructions.ContainsKey(InstructionType.Timed);
 
-        internal bool HelpMode => Instructions.ContainsKey(SwitchType.DisplayHelp);
-
-        internal bool GroupMode => Instructions.ContainsKey(SwitchType.Group);
-
-        internal bool TimedMode => Instructions.ContainsKey(SwitchType.Timed);
-
-        internal bool VerbodeMode => Instructions.ContainsKey(SwitchType.Verbose);
+        internal bool VerbodeMode => Instructions.ContainsKey(InstructionType.Verbose);
         
-        internal bool ParallelMode => Instructions.ContainsKey(SwitchType.Parallel);
+        internal bool ParallelMode => Instructions.ContainsKey(InstructionType.Parallel);
 
-        internal ApplicationMode ApplicationMode { get; set; }
+        internal ApplicationMode ApplicationMode
+        {
+            get
+            {
+                if (Instructions.ContainsKey(InstructionType.DisplayHelp))
+                {
+                    return ApplicationMode.Help;
+                }
+                if (Instructions.ContainsKey(InstructionType.DisplayList))
+                {
+                    return ApplicationMode.List;
+                }
+
+                return Instructions.ContainsKey(InstructionType.Group) ? ApplicationMode.Group : ApplicationMode.Single;
+            }
+        }
+
+        internal void SetInstructions(InstructionType instructionType, Instruction instruction)
+        {
+            if (Instructions.ContainsKey(instructionType))
+                Instructions[instructionType] = instruction;
+            else
+             Instructions.Add(instructionType, instruction);
+        }
 
         internal object[] ConstructorArguments
-            => !Instructions.ContainsKey(SwitchType.Constructor)
+            => !Instructions.ContainsKey(InstructionType.Constructor)
                 ? null
-                : Instructions[SwitchType.Constructor]
-                    .ToArray();
+                : Instructions[InstructionType.Constructor].Arguments.ToArray();
 
         internal object[] MethodArguments
-            => !Instructions.ContainsKey(SwitchType.Method)
+            => !Instructions.ContainsKey(InstructionType.Method)
                 ? null
-                : Instructions[SwitchType.Method]
-                    .ToArray();
+                : Instructions[InstructionType.Method].Arguments.ToArray();
 
         internal IExecuteInstructions Runner
         {
             get
             {
-                if (ListMode) return new ExecuteListInstructions();
-
-                if (HelpMode) return new ExecuteHelpInstructions();
-
-                if (GroupMode) return new ExecuteGroupTaskInstructions();
-
-                return new ExecuteSingleTaskInstructions();
+                switch (ApplicationMode)
+                {
+                    case ApplicationMode.List:
+                        return new ExecuteListInstructions();
+                    case ApplicationMode.Help:
+                        return new ExecuteHelpInstructions();
+                    case ApplicationMode.Group:
+                        return new ExecuteGroupTaskInstructions();
+                    case ApplicationMode.Single:
+                        return new ExecuteSingleTaskInstructions();
+                    default:
+                        return new ExecuteNullInstructions();
+                }
             }
         }
 
