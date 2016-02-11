@@ -41,8 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\TaskGroupAttribute.cs" />
+    <Compile Include="Model\ApplicationMode.cs" />
     <Compile Include="Model\TaskGroup.cs" />
-    <Compile Include="Model\UserInput.cs" />
+    <Compile Include="Model\ApplicationInstructions.cs" />
     <Compile Include="Model\RunForrestConfiguration.cs" />
     <Compile Include="Attributes\TaskAttribute.cs" />
     <Compile Include="Model\SwitchType.cs" />
@@ -55,10 +56,11 @@
     <Compile Include="Runners\ExecuteHelpInstructions.cs" />
     <Compile Include="Runners\ExecuteListInstructions.cs" />
     <Compile Include="Runners\ExecuteSingleTaskInstructions.cs" />
-    <Compile Include="Util\Extensions.cs" />
+    <Compile Include="Util\ReflectionExtensions.cs" />
     <Compile Include="Util\IConfigureRunForrest.cs" />
     <Compile Include="Util\Instance.cs" />
-    <Compile Include="Util\UserInputParser.cs" />
+    <Compile Include="Util\StringExtensions.cs" />
+    <Compile Include="Util\InstructionParser.cs" />
     <Compile Include="Util\Printer.cs" />
     <Compile Include="Util\Validate.cs" />
   </ItemGroup>

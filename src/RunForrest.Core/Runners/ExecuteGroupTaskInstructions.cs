@@ -8,31 +8,31 @@ namespace RunForrest.Core.Runners
 {
     internal class ExecuteGroupTaskInstructions : IExecuteInstructions
     {
-        public void Execute(UserInput instructions)
+        public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
         {
-            if (string.IsNullOrEmpty(instructions.Alias))
+            if (string.IsNullOrEmpty(instructions.ExecuteAlias))
             {
                 throw new ArgumentException("Invalid arguments. Please specify as task alias.");
             }
 
-            var taskCollection = TaskCollection.SelectTaskGroup(instructions.Alias);
+            var taskCollection = TaskCollection.SelectTaskGroup(instructions.ExecuteAlias);
 
             var sw = Stopwatch.StartNew();
-            var isTimedMode = instructions.TimedMode || RunForrestConfiguration.Instance.IsTimedMode;
+            var isTimedMode = instructions.TimedMode || configuration.IsTimedMode;
 
 
             if (instructions.ParallelMode)
             {
-                Parallel.ForEach(taskCollection.Tasks, x =>
+                Parallel.ForEach(taskCollection.Tasks, task =>
                 {
-                    x.Execute();
+                    task.Execute(configuration, instructions.ConstructorArguments, instructions.MethodArguments);
                 });                
             }
             else
             {
                 foreach (var task in taskCollection.Tasks)
                 {
-                    task.Execute();
+                    task.Execute(configuration, instructions.ConstructorArguments, instructions.MethodArguments);
                 }
             }
             

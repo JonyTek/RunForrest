@@ -10,7 +10,7 @@ namespace RunForrest.Specs.Util
         [Test]
         public void ShouldPrintMethodInfo()
         {
-            TaskCollection.Initialise<Tasks>(RunForrestConfiguration.Instance);
+            TaskCollection.Initialise<Tasks>(new RunForrestConfiguration());
 
             var signature = TaskCollection.SelectTask("mytask").MethodSignature;
 

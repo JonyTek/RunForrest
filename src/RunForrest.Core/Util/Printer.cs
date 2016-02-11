@@ -5,6 +5,13 @@ namespace RunForrest.Core.Util
 {
     public static class Printer
     {
+        private static RunForrestConfiguration config;
+
+        internal static void Configure(RunForrestConfiguration configuration)
+        {
+            config = configuration;
+        }
+
         public static void Info(string format, params object[] args)
         {
             Info(string.Format(format, args));
@@ -50,7 +57,7 @@ namespace RunForrest.Core.Util
 
         internal static void Error(Exception ex, bool verbodeMode)
         {
-            var displayFullError = verbodeMode || RunForrestConfiguration.Instance.IsVerbodeMode;
+            var displayFullError = verbodeMode || config.IsVerbodeMode;
             if (displayFullError)
             {
                 Error(ex);

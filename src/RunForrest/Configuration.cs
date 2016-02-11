@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 
@@ -24,9 +22,15 @@ namespace RunForrest
                 Printer.Print(ConsoleColor.DarkGreen, "Completed {0}", task.Alias);
             };
 
-            configuration.IsTimedMode = true;
-            configuration.IsVerbodeMode = true;
-            configuration.AdditionalAssembliesToScanForTasks = new List<Assembly>();
+            configuration.ExecuteAlias = "group";
+            configuration.IsInGroupMode = true;
+
+            configuration.ConsoleColor = ConsoleColor.DarkGreen;
+
+            //configuration.IsTimedMode = true;
+            //configuration.IsVerbodeMode = true;
+
+            //configuration.AdditionalAssembliesToScanForTasks = new List<Assembly>();
         }
     }
 }

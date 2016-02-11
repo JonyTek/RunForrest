@@ -7,7 +7,7 @@ using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
-    internal static class Extensions
+    internal static class ReflectionExtensions
     {
         internal static int GetTaskPriority(this MethodInfo method)
         {

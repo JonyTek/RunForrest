@@ -4,6 +4,6 @@ namespace RunForrest.Core.Runners
 {
     internal interface IExecuteInstructions
     {
-        void Execute(UserInput instructions);
+        void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration);
     }
 }

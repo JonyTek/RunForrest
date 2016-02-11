@@ -7,15 +7,15 @@ namespace RunForrest.Core.Runners
 {
     internal class ExecuteSingleTaskInstructions : IExecuteInstructions
     {
-        public void Execute(UserInput instructions)
+        public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
         {
-            if (string.IsNullOrEmpty(instructions.Alias))
+            if (string.IsNullOrEmpty(instructions.ExecuteAlias))
             {
                 throw new ArgumentException("Invalid arguments. Please specify as task alias.");
             }
 
             var sw = Stopwatch.StartNew();
-            var isTimedMode = instructions.TimedMode || RunForrestConfiguration.Instance.IsTimedMode;
+            var isTimedMode = instructions.TimedMode || configuration.IsTimedMode;
 
             if (isTimedMode)
             {
@@ -24,8 +24,8 @@ namespace RunForrest.Core.Runners
 
             try
             {
-                TaskCollection.SelectTask(instructions.Alias)
-                    .Execute(instructions.ConstructorArguments, instructions.MethodArguments);
+                var task = TaskCollection.SelectTask(instructions.ExecuteAlias);
+                task.Execute(configuration, instructions.ConstructorArguments, instructions.MethodArguments);
             }
             finally
             {

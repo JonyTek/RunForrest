@@ -11,32 +11,19 @@ namespace RunForrest.Core
             where T : class
         {
             try
-            { 
-                var setup = TryConfigureApplication<T>();
+            {
+                var config = RunForrestConfiguration.ConfigureApp<T>();
+                
+                Printer.Configure(config);
 
-                TaskCollection.Initialise<T>(setup);
+                TaskCollection.Initialise<T>(config);
 
-                UserInputParser.Parse(arguments).Execute();
+                InstructionParser.ParseInstructions(arguments, config).Run();
             }
             catch (Exception ex)
             {
                 Printer.Error(ex.Message);
             }
-        }
-
-        private static RunForrestConfiguration TryConfigureApplication<T>()
-        {
-            var configurations = typeof(T).Assembly.GetConfigurations().ToArray();
-
-            if (!configurations.Any()) return RunForrestConfiguration.Instance;
-
-            Validate.Configuartions(configurations);
-
-            var configurer = Instance.Create(configurations.First(), null) as IConfigureRunForrest;
-
-            configurer.Setup(RunForrestConfiguration.Instance);
-
-            return RunForrestConfiguration.Instance; 
         }
     }
 }

@@ -11,9 +11,9 @@ namespace RunForrest.Core.Model
 
         private readonly MethodInfo method;
 
-        internal int Priority { get; }
-
         private readonly ParameterInfo[] parameters;
+
+        internal int Priority { get; }
 
         internal Task(Type type, MethodInfo method)
         {
@@ -62,15 +62,15 @@ namespace RunForrest.Core.Model
             }
         }
 
-        internal void Execute(object[] constructorArgs = null, object[] methodArgs = null)
+        internal void Execute(RunForrestConfiguration configuration, object[] constructorArgs = null, object[] methodArgs = null)
         {
-            RunForrestConfiguration.Instance.OnBeforeEachTask(this);
+            configuration.OnBeforeEachTask(this);
 
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = configuration.ConsoleColor;
 
             var returnValue = method.Invoke(Instance.Create(type, constructorArgs), methodArgs);
 
-            RunForrestConfiguration.Instance.OnAfterEachTask(this, returnValue);
+            configuration.OnAfterEachTask(this, returnValue);
 
             Console.ForegroundColor = ConsoleColor.Gray;
         }

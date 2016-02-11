@@ -7,9 +7,9 @@ namespace RunForrest.Core.Runners
 {
     internal class ExecuteListInstructions : IExecuteInstructions
     {
-        public void Execute(UserInput instructions)
+        public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
         {
-            if (!string.IsNullOrEmpty(instructions.Alias))
+            if (!string.IsNullOrEmpty(instructions.ExecuteAlias))
             {
                 throw new ArgumentException("Invalid arguments. Cannot list a task.");
             }

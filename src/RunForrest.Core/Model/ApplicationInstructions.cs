@@ -5,14 +5,17 @@ using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Model
 {
-    internal class UserInput
+    internal class ApplicationInstructions
     {
-        internal UserInput()
+        private readonly RunForrestConfiguration configuration;
+
+        internal ApplicationInstructions(RunForrestConfiguration configuration)
         {
+            this.configuration = configuration;
             Instructions = new Dictionary<SwitchType, List<string>>();
         }
 
-        internal string Alias { get; set; }
+        internal string ExecuteAlias { get; set; }
 
         internal Dictionary<SwitchType, List<string>> Instructions;        
 
@@ -20,13 +23,15 @@ namespace RunForrest.Core.Model
 
         internal bool HelpMode => Instructions.ContainsKey(SwitchType.DisplayHelp);
 
+        internal bool GroupMode => Instructions.ContainsKey(SwitchType.Group);
+
         internal bool TimedMode => Instructions.ContainsKey(SwitchType.Timed);
 
         internal bool VerbodeMode => Instructions.ContainsKey(SwitchType.Verbose);
-
-        internal bool GroupMode => Instructions.ContainsKey(SwitchType.Group);
-
+        
         internal bool ParallelMode => Instructions.ContainsKey(SwitchType.Parallel);
+
+        internal ApplicationMode ApplicationMode { get; set; }
 
         internal object[] ConstructorArguments
             => !Instructions.ContainsKey(SwitchType.Constructor)
@@ -48,17 +53,17 @@ namespace RunForrest.Core.Model
 
                 if (HelpMode) return new ExecuteHelpInstructions();
 
-                if(GroupMode) return new ExecuteGroupTaskInstructions();
+                if (GroupMode) return new ExecuteGroupTaskInstructions();
 
                 return new ExecuteSingleTaskInstructions();
             }
         }
 
-        internal void Execute()
+        internal void Run()
         {
             try
             {
-                Runner.Execute(this);
+                Runner.Execute(this, configuration);
             }
             catch (Exception ex)
             {
