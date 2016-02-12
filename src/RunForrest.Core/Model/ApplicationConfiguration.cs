@@ -31,9 +31,9 @@ namespace RunForrest.Core.Model
 
         public DefaultArguments DefaultArguments { get; }
 
-        public Action<Task> OnBeforeEachTask { internal get; set; }
+        public Action<BasicTask> OnBeforeEachTask { internal get; set; }
 
-        public Action<Task, object> OnAfterEachTask { internal get; set; }
+        public Action<BasicTask, object> OnAfterEachTask { internal get; set; }
 
         internal Assembly[] AdditionalAssembliesToScanForTasks { get; set; }
 

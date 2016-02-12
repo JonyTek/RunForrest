@@ -1,25 +1,29 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using RunForrest.Core.Ioc;
 using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Model
 {
-    public class Task
+    public class BasicTask : ITask<object>
     {
         private readonly Type type;
 
-        private readonly MethodInfo method;
+        public MethodInfo Method { get; set; }
+
+        public object InstanceToCall
+        {
+            get { return Instance.Create(type, con); }
+        }
 
         private readonly ParameterInfo[] parameters;
 
         internal int Priority { get; }
 
-        internal Task(Type type, MethodInfo method)
+        internal BasicTask(Type type, MethodInfo method)
         {
             this.type = type;
-            this.method = method;            
+            this.Method = method;            
             this.parameters = method.GetParameters();
 
             Alias = method.GetTaskAlias();
@@ -31,7 +35,7 @@ namespace RunForrest.Core.Model
 
         public string Description { get; private set; }
 
-        public bool ReturnsValue => method.ReturnType.Name == "Void";
+        public bool ReturnsValue => Method.ReturnType.Name == "Void";
 
         public string UsageExample
         {
@@ -46,7 +50,7 @@ namespace RunForrest.Core.Model
                         .Aggregate(usage, (current, parameter) => current + (parameter.Name + "> "));
                 }
 
-                return string.Format("<appname> {0} {1}", method.GetTaskAlias(), usage);
+                return string.Format("<appname> {0} {1}", Method.GetTaskAlias(), usage);
             }
         }
 
@@ -59,7 +63,7 @@ namespace RunForrest.Core.Model
                         x.ParameterType.Name, x.Name);
 
                 return string.Format("public {0} {1}({2}){{ }}",
-                    method.ReturnType.Name, method.Name, string.Join(", ", parmters));
+                    Method.ReturnType.Name, Method.Name, string.Join(", ", parmters));
             }
         }
 
@@ -67,15 +71,14 @@ namespace RunForrest.Core.Model
         {
             configuration.OnBeforeEachTask(this);
 
-            Console.ForegroundColor = configuration.ConsoleColor;
-
-            var instance = DependencyManager.Instance.Resolve(type);
-
-            var returnValue = method.Invoke(Instance.Create(type, constructorArgs), methodArgs);
+            var returnValue = Method.Invoke(Instance.Create(type, constructorArgs), methodArgs);
 
             configuration.OnAfterEachTask(this, returnValue);
+        }
 
-            Console.ForegroundColor = ConsoleColor.Gray;
+        public void Execute(ApplicationConfiguration configuration)
+        {
+            throw new NotImplementedException();
         }
     }
 }

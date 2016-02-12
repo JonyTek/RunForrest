@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexTasks\ComplexTask.cs" />
+    <Compile Include="ComplexTasks\ComplexTaskConfiguration.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IService.cs" />
     <Compile Include="Tasks\LifeIsLikeTask.cs" />
     <Compile Include="Tasks\RunForrestTask.cs" />
     <Compile Include="Tasks\TaskGroup.cs" />

@@ -38,12 +38,12 @@ namespace RunForrest.Core.Util
             return Type.GetCustomAttribute<TaskGroupAttribute>().Description;
         }
 
-        internal static IEnumerable<Task> ScanForSingleTasks(this Assembly assembly)
+        internal static IEnumerable<BasicTask> ScanForSingleTasks(this Assembly assembly)
         {
             return from type in assembly.GetTypes()
                    from method in type.GetMethods()
                    where method.IsTask()
-                   select new Task(type, method);
+                   select new BasicTask(type, method);
         }
 
         internal static IEnumerable<TaskGroup> ScanForTaskGroups(this Assembly assembly)
@@ -51,7 +51,7 @@ namespace RunForrest.Core.Util
             var groups = assembly.GetTypes().Where(x => x.IsTaskGroup());
 
             return from taskGroup in groups
-                let tasks = taskGroup.GetMethods().Where(x => x.IsTask()).Select(x => new Task(taskGroup, x))
+                let tasks = taskGroup.GetMethods().Where(x => x.IsTask()).Select(x => new BasicTask(taskGroup, x))
                 select new TaskGroup
                 {
                     Alias = taskGroup.GetTaskGroupAlias(),

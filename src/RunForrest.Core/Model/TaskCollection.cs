@@ -7,11 +7,11 @@ namespace RunForrest.Core.Model
 {
     internal static class TaskCollection
     {
-        private static readonly Dictionary<string, Task> Tasks = new Dictionary<string, Task>();
+        private static readonly Dictionary<string, BasicTask> Tasks = new Dictionary<string, BasicTask>();
 
         private static readonly Dictionary<string, TaskGroup> TaskGroups = new Dictionary<string, TaskGroup>();
 
-        private static void InsertTask(string alias, Task task)
+        private static void InsertTask(string alias, BasicTask task)
         {
             var lowerAlias = alias.ToLower();
 
@@ -57,7 +57,7 @@ namespace RunForrest.Core.Model
             }
         }
 
-        internal static Task SelectTask(string alias)
+        internal static BasicTask SelectTask(string alias)
         {
             var lowerAlias = alias.ToLower();
 
@@ -83,7 +83,7 @@ namespace RunForrest.Core.Model
             return TaskGroups[lowerAlias];
         }
 
-        internal static Dictionary<string, Task> GetTasks()
+        internal static Dictionary<string, BasicTask> GetTasks()
         {
             return Tasks;
         }

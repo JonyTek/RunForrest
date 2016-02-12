@@ -60,7 +60,7 @@
     <Compile Include="Attributes\TaskAttribute.cs" />
     <Compile Include="Model\SwitchType.cs" />
     <Compile Include="Model\TaskCollection.cs" />
-    <Compile Include="Model\Task.cs" />
+    <Compile Include="Model\BasicTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunForrest.cs" />
     <Compile Include="Runners\ExecuteGroupTaskInstructions.cs" />

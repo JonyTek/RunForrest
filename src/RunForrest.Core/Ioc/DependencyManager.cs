@@ -73,13 +73,7 @@ namespace RunForrest.Core.Ioc
         public T Resolve<T>(Type type)
             where T : class
         {
-            T resolved;
-            using (var scope = Container.BeginLifetimeScope())
-            {
-                resolved = scope.Resolve(type) as T;
-            }
-
-            return resolved;
+            return Resolve(type) as T;
         }
 
         public object Resolve(Type type)

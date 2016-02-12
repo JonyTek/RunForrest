@@ -2,6 +2,7 @@
 using RunForrest.Core.Ioc;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
+using RunForrest.Services;
 
 namespace RunForrest
 {
@@ -23,36 +24,7 @@ namespace RunForrest
                 Printer.Print(ConsoleColor.DarkGreen, "Completed {0}", task.Alias);
             };
 
-            RegisterIoc(configuration.Ioc);
-
-            configuration
-                //.SetIsInGroupMode(true)
-                .SetIsInTimedMode(true)
-                .SetIsInVerbodeMode(true)
-                .SetDefaultAlias("group")
-                .SetConsoleColor(ConsoleColor.DarkGreen)
-                .ApplyConfigurations();
-
-            //configuration.IsTimedMode = true;
-            //configuration.IsVerbodeMode = true;
-
-            //configuration.AdditionalAssembliesToScanForTasks = new List<Assembly>();
-
+            configuration.SetIsInVerbodeMode(true).ApplyConfigurations();
         }
-
-        private void RegisterIoc(DependencyManager dependencyManager)
-        {
-            dependencyManager.Register<IAmAnInterface, AmAClass>();
-        }
-    }
-
-    public interface IAmAnInterface
-    {
-        string Name { get; }
-    }
-
-    public class AmAClass : IAmAnInterface
-    {
-        public string Name => "Hi.";
     }
 }
