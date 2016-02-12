@@ -7,7 +7,7 @@ namespace RunForrest.Core.Runners
 {
     internal class ExecuteHelpInstructions : IExecuteInstructions
     {
-        public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
+        public void Execute(ApplicationInstructions instructions, ApplicationConfiguration configuration)
         {
             if (instructions.Instructions.Values.Count(x => x.InstructionsFrom == InstructionsFrom.Console) > 1)
             {

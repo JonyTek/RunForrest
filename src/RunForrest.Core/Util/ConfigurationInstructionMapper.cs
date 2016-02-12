@@ -5,9 +5,9 @@ namespace RunForrest.Core.Util
 {
     internal class ConfigurationInstructionMapper : IParseInstructions
     {
-        private readonly RunForrestConfiguration configuration;
+        private readonly ApplicationConfiguration configuration;
 
-        internal ConfigurationInstructionMapper(RunForrestConfiguration configuration)
+        internal ConfigurationInstructionMapper(ApplicationConfiguration configuration)
         {
             this.configuration = configuration;
         }
@@ -16,10 +16,10 @@ namespace RunForrest.Core.Util
         {
             var set = new InstructionSet(InstructionsFrom.Configuration)
             {
-                ExecuteAlias = configuration.ExecuteAlias
+                ExecuteAlias = configuration.DefaultArguments.ExecuteAlias
             };
 
-            configuration.ConstructorArguments.Any()
+            configuration.DefaultArguments.ConstructorArguments.Any()
                 .ExecuteIfTrue(() => set.Instructions.Add(
                     new Instruction
                     {
@@ -27,7 +27,7 @@ namespace RunForrest.Core.Util
                         Arguments = new string[0],
                         InstructionsFrom = InstructionsFrom.Configuration
                     }));
-            configuration.MethodArguments.Any()
+            configuration.DefaultArguments.MethodArguments.Any()
                 .ExecuteIfTrue(() => set.Instructions.Add(
                     new Instruction
                     {

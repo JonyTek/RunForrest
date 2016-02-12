@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\TaskGroupAttribute.cs" />
+    <Compile Include="Ioc\DependencyManager.cs" />
     <Compile Include="Model\ApplicationMode.cs" />
+    <Compile Include="Model\DefaultArguments.cs" />
     <Compile Include="Model\ExecuteAlias.cs" />
     <Compile Include="Model\Instruction.cs" />
     <Compile Include="Model\InstructionSet.cs" />
@@ -50,7 +56,7 @@
     <Compile Include="Util\IMapInstructions.cs" />
     <Compile Include="Model\TaskGroup.cs" />
     <Compile Include="Model\ApplicationInstructions.cs" />
-    <Compile Include="Model\RunForrestConfiguration.cs" />
+    <Compile Include="Model\ApplicationConfiguration.cs" />
     <Compile Include="Attributes\TaskAttribute.cs" />
     <Compile Include="Model\SwitchType.cs" />
     <Compile Include="Model\TaskCollection.cs" />
@@ -73,6 +79,9 @@
     <Compile Include="Util\StringExtensions.cs" />
     <Compile Include="Util\Printer.cs" />
     <Compile Include="Util\Validate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

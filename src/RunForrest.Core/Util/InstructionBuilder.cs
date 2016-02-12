@@ -8,9 +8,9 @@ namespace RunForrest.Core.Util
 
         private readonly InstructionSet configInstructions;
 
-        private readonly RunForrestConfiguration configuration;
+        private readonly ApplicationConfiguration configuration;
 
-        internal InstructionBuilder(string[] arguments, RunForrestConfiguration configuration)
+        internal InstructionBuilder(string[] arguments, ApplicationConfiguration configuration)
         {
             this.configuration = configuration;
 
@@ -40,7 +40,7 @@ namespace RunForrest.Core.Util
                         instructions.ExecuteAlias =
                             new ExecuteAlias
                             {
-                                Alias = configuration.ExecuteAlias,
+                                Alias = configuration.DefaultArguments.ExecuteAlias,
                                 InstructionsFrom = InstructionsFrom.Configuration
                             });
 

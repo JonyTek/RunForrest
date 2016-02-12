@@ -4,6 +4,6 @@ namespace RunForrest.Core.Util
 {
     public interface IConfigureRunForrest
     {
-        void Setup(RunForrestConfiguration configuration);
+        void Setup(ApplicationConfiguration configuration);
     }
 }

@@ -34,7 +34,7 @@ namespace RunForrest.Core.Model
             return ByType(switchType) == null;
         }
 
-        internal ApplicationInstructions ToApplicationInstructions(RunForrestConfiguration configuration,
+        internal ApplicationInstructions ToApplicationInstructions(ApplicationConfiguration configuration,
             InstructionsFrom instructionsFrom)
         {
             var appInstructions = new ApplicationInstructions(configuration)

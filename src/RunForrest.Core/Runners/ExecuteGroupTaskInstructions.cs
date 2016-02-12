@@ -8,7 +8,7 @@ namespace RunForrest.Core.Runners
 {
     internal class ExecuteGroupTaskInstructions : IExecuteInstructions
     {
-        public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
+        public void Execute(ApplicationInstructions instructions, ApplicationConfiguration configuration)
         {
             if (string.IsNullOrEmpty(instructions.ExecuteAlias.Alias))
             {

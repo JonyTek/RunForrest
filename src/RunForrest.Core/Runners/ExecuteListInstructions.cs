@@ -7,7 +7,7 @@ namespace RunForrest.Core.Runners
 {
     internal class ExecuteListInstructions : IExecuteInstructions
     {
-        public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
+        public void Execute(ApplicationInstructions instructions, ApplicationConfiguration configuration)
         {
             if (!string.IsNullOrEmpty(instructions.ExecuteAlias.Alias) && instructions.ExecuteAlias.InstructionsFrom == InstructionsFrom.Console)
             {

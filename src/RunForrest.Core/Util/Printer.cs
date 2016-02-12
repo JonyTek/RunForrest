@@ -5,9 +5,9 @@ namespace RunForrest.Core.Util
 {
     public static class Printer
     {
-        private static RunForrestConfiguration config;
+        private static ApplicationConfiguration config;
 
-        internal static void Configure(RunForrestConfiguration configuration)
+        internal static void Configure(ApplicationConfiguration configuration)
         {
             config = configuration;
         }

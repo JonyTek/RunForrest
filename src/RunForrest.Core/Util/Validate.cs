@@ -16,15 +16,14 @@ namespace RunForrest.Core.Util
             }
         }
 
-        internal static void Configuartions(IEnumerable<Type> configurations)
+        internal static void Configuartions(Type[] configurations)
         {
-            var configs = configurations as Type[] ?? configurations.ToArray();
-            if (configs.Count() > 1)
+            if (configurations.Length > 1)
             {
                 throw new InvalidOperationException(
                     string.Format(
                         "Cannot specify multiple configuration points in a single application. You have specified {0}",
-                        configs.Count()));
+                        configurations.Length));
             }
         }
     }

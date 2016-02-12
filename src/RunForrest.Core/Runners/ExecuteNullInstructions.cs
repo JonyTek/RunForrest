@@ -5,7 +5,7 @@ namespace RunForrest.Core.Runners
 {
     internal class ExecuteNullInstructions : IExecuteInstructions
     {
-        public void Execute(ApplicationInstructions instructions, RunForrestConfiguration configuration)
+        public void Execute(ApplicationInstructions instructions, ApplicationConfiguration configuration)
         {
             Console.WriteLine("Unkown Application Type!");
         }

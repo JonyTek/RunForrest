@@ -37,7 +37,7 @@ namespace RunForrest.Core.Model
             TaskGroups.Add(lowerAlias, group);
         }
 
-        internal static void Initialise<T>(RunForrestConfiguration config)
+        internal static void Initialise<T>(ApplicationConfiguration config)
         {
             var assemblies = new[] {typeof (T).Assembly}.ToList();
 

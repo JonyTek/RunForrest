@@ -8,9 +8,9 @@ namespace RunForrest.Core.Model
 {
     internal class ApplicationInstructions
     {
-        private readonly RunForrestConfiguration configuration;
+        private readonly ApplicationConfiguration configuration;
 
-        internal ApplicationInstructions(RunForrestConfiguration configuration)
+        internal ApplicationInstructions(ApplicationConfiguration configuration)
         {
             this.configuration = configuration;
             Instructions = new Dictionary<InstructionType, Instruction>();

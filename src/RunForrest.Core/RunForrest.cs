@@ -11,7 +11,7 @@ namespace RunForrest.Core
         {
             try
             {
-                var config = RunForrestConfiguration.ConfigureApp<T>();
+                var config = ApplicationConfiguration.ConfigureApp<T>();
                 
                 Printer.Configure(config);
 

@@ -61,14 +61,14 @@ namespace RunForrest.Core.Util
 
     public class ComplexTask : ITask
     {
-        public void Execute(RunForrestConfiguration configuration)
+        public void Execute(ApplicationConfiguration configuration)
         {
         }
     }
 
     public interface ITask
     {
-        void Execute(RunForrestConfiguration configuration);
+        void Execute(ApplicationConfiguration configuration);
     }
 
     public interface IConigureComplexTask<T>

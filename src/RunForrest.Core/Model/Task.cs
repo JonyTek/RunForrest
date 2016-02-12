@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using RunForrest.Core.Ioc;
 using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Model
@@ -62,11 +63,13 @@ namespace RunForrest.Core.Model
             }
         }
 
-        internal void Execute(RunForrestConfiguration configuration, object[] constructorArgs = null, object[] methodArgs = null)
+        internal void Execute(ApplicationConfiguration configuration, object[] constructorArgs = null, object[] methodArgs = null)
         {
             configuration.OnBeforeEachTask(this);
 
             Console.ForegroundColor = configuration.ConsoleColor;
+
+            var instance = DependencyManager.Instance.Resolve(type);
 
             var returnValue = method.Invoke(Instance.Create(type, constructorArgs), methodArgs);
 
