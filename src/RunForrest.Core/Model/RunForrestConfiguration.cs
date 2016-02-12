@@ -20,11 +20,11 @@ namespace RunForrest.Core.Model
             OnAfterEachTask = (task, returnValue) => { };
         }
 
-        public ConsoleColor ConsoleColor { get; set; }
+        public ConsoleColor ConsoleColor { internal get; set; }
 
-        public string ExecuteAlias { get; set; }
+        public string ExecuteAlias { internal get; set; }
 
-        public bool IsInGroupMode { get; set; }
+        public bool IsInGroupMode { internal get; set; }
 
         public bool IsTimedMode { internal get; set; }
 
@@ -32,7 +32,7 @@ namespace RunForrest.Core.Model
 
         public string[] ConstructorArguments { internal get; set; }
 
-        public string[] MethodArguments { internal get; set; }
+        public string[] MethodArguments { internal get; set; }2
 
         public Action<Task> OnBeforeEachTask { internal get; set; }
 

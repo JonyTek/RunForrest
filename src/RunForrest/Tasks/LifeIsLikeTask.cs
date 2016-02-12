@@ -7,12 +7,14 @@ namespace RunForrest.Tasks
     {
         private readonly string what;
 
+        private const string Taskname = "like";
+
         public LifeIsLikeTask(string what)
         {
             this.what = what;
         }
 
-        [Task("like")]
+        [Task(Taskname)]
         public void ABoxOfChocolates()
         {
             Console.WriteLine("Life is like {0}", what);
