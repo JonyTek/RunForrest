@@ -9,21 +9,14 @@ namespace RunForrest.ComplexTasks
     {
         public void Setup(ComplexTaskConfiguration<IComplexTask> configuration)
         {
-            RegisterDependencies(configuration.Ioc);
+            configuration.Ioc.Register<IService, Service>();
+            configuration.Ioc.Register<IComplexTask, MyComplexTask>();
 
             configuration.WithAlias("alias");
-            configuration.OnInstanceOf<IComplexTask>();
-            configuration.OnMethodWithAlias("complextask");
+            configuration.OnMethodWithName("sayhello");
+            configuration.WithMethodArguments(new object[0]);
 
-            //configuration.OnInstance(() => new TaskContainer());
-            //configuration.WithConstructorArguments(new object[0]);
-            //configuration.WithMethodArguments(new object[0]);
-        }
-
-        public void RegisterDependencies(DependencyManager manager)
-        {
-            manager.Register<IService, Service>();
-            manager.Register<IComplexTask, ComplexTask>();
+            //configuration.OnInstance(() => new MyComplexTask(new Service()));
         }
     }
 }

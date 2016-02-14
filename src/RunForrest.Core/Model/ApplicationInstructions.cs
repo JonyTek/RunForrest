@@ -16,7 +16,7 @@ namespace RunForrest.Core.Model
             Instructions = new Dictionary<InstructionType, Instruction>();
         }
 
-        internal ExecuteAlias ExecuteAlias { get; set; }
+        internal ExecutionAlias ExecuteAlias { get; set; }
 
         internal Dictionary<InstructionType, Instruction> Instructions;        
 
@@ -48,7 +48,7 @@ namespace RunForrest.Core.Model
             if (Instructions.ContainsKey(instructionType))
                 Instructions[instructionType] = instruction;
             else
-             Instructions.Add(instructionType, instruction);
+                Instructions.Add(instructionType, instruction);
         }
 
         internal object[] ConstructorArguments

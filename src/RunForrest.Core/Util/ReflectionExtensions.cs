@@ -16,6 +16,8 @@ namespace RunForrest.Core.Util
 
         internal static string GetTaskAlias(this MethodInfo method)
         {
+            if (method.GetCustomAttribute<TaskAttribute>() == null) return null;
+
             var alias = method.GetCustomAttribute<TaskAttribute>().Alias ?? method.Name;
 
             return alias.ToLower();
@@ -23,22 +25,28 @@ namespace RunForrest.Core.Util
 
         internal static string GetTaskDescription(this MethodInfo method)
         {
+            if (method.GetCustomAttribute<TaskAttribute>() == null) return null;
+
             return method.GetCustomAttribute<TaskAttribute>().Description;
         }
 
         internal static string GetTaskGroupAlias(this Type group)
         {
+            if (group.GetCustomAttribute<TaskGroupAttribute>() == null) return null;
+
             var alias = group.GetCustomAttribute<TaskGroupAttribute>().Alias ?? group.Name;
 
             return alias.ToLower();
         }
 
-        internal static string GetTaskDescription(this Type Type)
+        internal static string GetTaskDescription(this Type type)
         {
-            return Type.GetCustomAttribute<TaskGroupAttribute>().Description;
+            if (type.GetCustomAttribute<TaskGroupAttribute>() == null) return null;
+
+            return type.GetCustomAttribute<TaskGroupAttribute>().Description;
         }
 
-        internal static IEnumerable<BasicTask> ScanForSingleTasks(this Assembly assembly)
+        internal static IEnumerable<AbstractTask> ScanForSingleTasks(this Assembly assembly)
         {
             return from type in assembly.GetTypes()
                    from method in type.GetMethods()
@@ -60,6 +68,14 @@ namespace RunForrest.Core.Util
                 };
         }
 
+        internal static MethodInfo GetMethodByName(this Type type, string name)
+        {
+            return
+                type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                    .FirstOrDefault(x => String.Equals(x.Name, name,
+                        StringComparison.CurrentCultureIgnoreCase));
+        }
+
         internal static bool IsTask(this MethodInfo method)
         {
             return Attribute.IsDefined(method, typeof(TaskAttribute));
@@ -70,9 +86,14 @@ namespace RunForrest.Core.Util
             return Attribute.IsDefined(type, typeof(TaskGroupAttribute));
         }
 
-        internal static IEnumerable<Type> GetConfigurations(this Assembly assembly)
+        internal static IEnumerable<Type> GetRunForrestConfigurations(this Assembly assembly)
         {
-            return assembly.GetTypes().Where(x => typeof (IConfigureRunForrest).IsAssignableFrom(x));
+            return assembly.GetTypes().Where(x => typeof(IConfigureRunForrest).IsAssignableFrom(x));
+        }
+
+        internal static IEnumerable<Type> GetComplexTaskConfigurations(this Assembly assembly)
+        {
+            return assembly.GetTypes().Where(x => typeof(IConigureComplexTask).IsAssignableFrom(x));
         }
     }
 }

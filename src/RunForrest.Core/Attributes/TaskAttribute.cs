@@ -1,4 +1,5 @@
 ﻿using System;
+using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Attributes
 {
@@ -8,7 +9,7 @@ namespace RunForrest.Core.Attributes
         public TaskAttribute(string alias = null, string description = null, int priority = 0)
         {
             Alias = alias;
-            Description = description ?? "<No Description>";
+            Description = description ?? Constants.NoDescriptionText;
             Priority = priority;
         }
 

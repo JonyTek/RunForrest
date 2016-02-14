@@ -1,6 +1,6 @@
 ﻿namespace RunForrest.Core.Model
 {
-    internal class ExecuteAlias
+    internal class ExecutionAlias
     {
         internal string Alias { get; set; }
 

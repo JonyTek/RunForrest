@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using RunForrest.Core.Ioc;
 
 namespace RunForrest.Core.Util
 {
@@ -8,7 +10,9 @@ namespace RunForrest.Core.Util
         {
             try
             {
-                return Activator.CreateInstance(type, args);
+                return type.IsInterface
+                    ? DependencyManager.Instance.Resolve(type)
+                    : Activator.CreateInstance(type, args);
             }
             catch (MissingMethodException ex)
             {

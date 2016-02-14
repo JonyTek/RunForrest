@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Model
 {
     internal class TaskGroup
     {
-        private IEnumerable<BasicTask> tasks;
+        private IEnumerable<AbstractTask> tasks;
 
         internal string Alias { get; set; }
 
         internal string Description { get; set; }
 
-        internal IEnumerable<BasicTask> Tasks
+        internal IEnumerable<AbstractTask> Tasks
         {
             get { return tasks.OrderBy(x => x.Priority); }
             set { tasks = value; }

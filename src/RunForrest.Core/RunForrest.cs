@@ -12,13 +12,13 @@ namespace RunForrest.Core
             try
             {
                 var config = ApplicationConfiguration.ConfigureApp<T>();
-                
+
                 Printer.Configure(config);
 
                 TaskCollection.Initialise<T>(config);
 
                 var instructions = new InstructionBuilder(arguments, config).Build();
-                
+
                 instructions.Run();
             }
             catch (Exception ex)

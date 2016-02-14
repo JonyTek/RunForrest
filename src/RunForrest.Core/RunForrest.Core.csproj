@@ -48,10 +48,11 @@
     <Compile Include="Ioc\DependencyManager.cs" />
     <Compile Include="Model\ApplicationMode.cs" />
     <Compile Include="Model\DefaultArguments.cs" />
-    <Compile Include="Model\ExecuteAlias.cs" />
+    <Compile Include="Model\ExecutionAlias.cs" />
     <Compile Include="Model\Instruction.cs" />
     <Compile Include="Model\InstructionSet.cs" />
     <Compile Include="Model\InstructionsFrom.cs" />
+    <Compile Include="Util\Constants.cs" />
     <Compile Include="Util\IConigureComplexTask.cs" />
     <Compile Include="Util\IMapInstructions.cs" />
     <Compile Include="Model\TaskGroup.cs" />

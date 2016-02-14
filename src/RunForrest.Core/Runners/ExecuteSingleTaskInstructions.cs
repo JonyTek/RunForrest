@@ -25,7 +25,7 @@ namespace RunForrest.Core.Runners
             try
             {
                 var task = TaskCollection.SelectTask(instructions.ExecuteAlias.Alias);
-                task.Execute(configuration, instructions.ConstructorArguments, instructions.MethodArguments);
+                task.Execute(configuration, instructions);
             }
             finally
             {

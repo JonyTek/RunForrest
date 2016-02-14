@@ -25,14 +25,14 @@ namespace RunForrest.Core.Runners
             {
                 Parallel.ForEach(taskCollection.Tasks, task =>
                 {
-                    task.Execute(configuration, instructions.ConstructorArguments, instructions.MethodArguments);
+                    task.Execute(configuration, instructions);
                 });                
             }
             else
             {
                 foreach (var task in taskCollection.Tasks)
                 {
-                    task.Execute(configuration, instructions.ConstructorArguments, instructions.MethodArguments);
+                    task.Execute(configuration, instructions);
                 }
             }
             

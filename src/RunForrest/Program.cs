@@ -1,4 +1,5 @@
-﻿using RunnForrest = RunForrest.Core.RunForrest;
+﻿using System;
+using RunnForrest = RunForrest.Core.RunForrest;
 
 namespace RunForrest
 {
@@ -7,6 +8,8 @@ namespace RunForrest
         static void Main(string[] args)
         {
             RunnForrest.Run<Program>(args);
+
+            Console.ReadKey();
         }
     }
 }

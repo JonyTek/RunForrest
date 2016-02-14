@@ -1,13 +1,17 @@
 ﻿using System;
-using System.Linq.Expressions;
+using System.Linq;
 using System.Reflection;
-using RunForrest.Core.Attributes;
 using RunForrest.Core.Ioc;
 using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
-    public class ComplexTaskConfiguration<TInstance>
+    public abstract class AbstractComplexTaskConfiguration
+    {
+        internal abstract AbstractTask ToTask();
+    }
+
+    public class ComplexTaskConfiguration<TInstance> : AbstractComplexTaskConfiguration
     {
         private string alias;
 
@@ -15,9 +19,9 @@ namespace RunForrest.Core.Util
 
         private MethodInfo method;
 
-        private object[] constructorArguments;
-
         private object[] methodArguments;
+
+        private string description;
 
         public DependencyManager Ioc => DependencyManager.Instance;
 
@@ -27,22 +31,29 @@ namespace RunForrest.Core.Util
             return this;
         }
 
+        public ComplexTaskConfiguration<TInstance> WithdescriptionTaskConfiguration(string description)
+        {
+            this.description = description;
+            return this;
+        }
+
         public ComplexTaskConfiguration<TInstance> OnInstance(Func<TInstance> instance)
         {
             this.instance = instance;
             return this;
         }
 
-        public ComplexTaskConfiguration<TInstance> OnMethodWithAlias(string onMethod)
+        public ComplexTaskConfiguration<TInstance> OnMethodWithName(string name)
         {
-            //Need to get method by alias -- task
-            method = typeof (TInstance).GetMethod(onMethod);
-            return this;
-        }
+            method = typeof (TInstance).GetMethodByName(name);
 
-        public ComplexTaskConfiguration<TInstance> WithConstructorArguments(object[] arguments)
-        {
-            constructorArguments = arguments;
+            if (method == null)
+            {
+                throw new InvalidOperationException(
+                    string.Format("No methond found '{0}' on type {1}", name,
+                        typeof (TInstance).Name));
+            }
+
             return this;
         }
 
@@ -52,35 +63,117 @@ namespace RunForrest.Core.Util
             return this;
         }
 
-        public ITask<TInstance> ToTask()
+        internal override AbstractTask ToTask()
         {
-            return new ComplexTask<TInstance>();
+            if (method == null)
+                throw new InvalidOperationException(string.Format("No method found for {0}", method));
+            if (string.IsNullOrEmpty(alias))
+                throw new InvalidOperationException(string.Format("No alias specified for {0}", method));
+
+            return new ComplexTask<TInstance>(method, alias, description, methodArguments, instance);
         }
     }
 
-    public class ComplexTask<TInstance> : ITask<TInstance>
+    public class ComplexTask<TInstance> : AbstractTask
     {
-        public TInstance InstanceToCall { get; }
+        private object[] methodArguments;
 
-        public MethodInfo Method { get; set; }
+        private Type type => typeof (TInstance);
 
-        public void Execute(ApplicationConfiguration configuration)
+        private Func<TInstance> Instance { get; set; }
+
+        public ComplexTask(MethodInfo method)
+            : base(method)
         {
+        }
 
+        internal ComplexTask(MethodInfo method, string alias, string description, object[] methodArguments, Func<TInstance> instance)
+            :base(method, alias, description)
+        {
+            Instance = instance;
+            this.methodArguments = methodArguments;
+        }
+
+        internal override void Execute(ApplicationConfiguration configuration, ApplicationInstructions instructions)
+        {
+            configuration.OnBeforeEachTask(this);
+
+            var instance = Instance != null
+                ? Instance()
+                : Util.Instance.Create(type, instructions.ConstructorArguments);
+            var returnValue = Method.Invoke(instance, methodArguments);
+
+            configuration.OnAfterEachTask(this, returnValue);
         }
     }
 
-    public interface ITask<out TInstance>
+    public abstract class AbstractTask
     {
-        TInstance InstanceToCall { get; }
+        internal AbstractTask(MethodInfo method)
+            : this(method, method.GetTaskAlias(), method.GetTaskDescription(), method.GetTaskPriority())
+        {
+        }
 
-        MethodInfo Method { get; set; }
+        internal AbstractTask(MethodInfo method, string alias, string description, int priority = 0) 
+        {
+            Method = method;
+            Alias = alias;
+            Priority = priority;
+            Description = description;
+            MethodParameters = method.GetParameters();
+        }
 
-        void Execute(ApplicationConfiguration configuration);
+        internal MethodInfo Method { get; }
+
+        protected ParameterInfo[] MethodParameters { get; set; }
+
+        public int Priority { get; protected set; }
+
+        public string Alias { get; protected set; }
+
+        public string Description { get; protected set; }
+
+        public bool ReturnsValue => Method.ReturnType.Name == "Void";
+
+        public string UsageExample
+        {
+            get
+            {
+                var usage = string.Empty;
+
+                if (MethodParameters.Any())
+                {
+                    usage = "-m <";
+                    usage = MethodParameters.ToArray()
+                        .Aggregate(usage, (current, parameter) => current + (parameter.Name + "> "));
+                }
+
+                return string.Format("<appname> {0} {1}", Method.GetTaskAlias(), usage);
+            }
+        }
+
+        internal string MethodSignature
+        {
+            get
+            {
+                var parmters = from x in MethodParameters.ToList()
+                    select string.Format("{0} {1}",
+                        x.ParameterType.Name, x.Name);
+
+                return string.Format("public {0} {1}({2}){{ }}",
+                    Method.ReturnType.Name, Method.Name, string.Join(", ", parmters));
+            }
+        }
+
+        internal abstract void Execute(ApplicationConfiguration configuration, ApplicationInstructions instructions);
     }
 
-    public interface IConigureComplexTask<T>
+    public interface IConigureComplexTask<TInstance> : IConigureComplexTask
     {
-        void Setup(ComplexTaskConfiguration<T> configuration);
+        void Setup(ComplexTaskConfiguration<TInstance> configuration);
+    }
+
+    public interface IConigureComplexTask
+    {
     }
 }

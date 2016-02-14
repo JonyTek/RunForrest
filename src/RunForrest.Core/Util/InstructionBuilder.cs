@@ -38,7 +38,7 @@ namespace RunForrest.Core.Util
                 .ExecuteIfTrue(
                     () =>
                         instructions.ExecuteAlias =
-                            new ExecuteAlias
+                            new ExecutionAlias
                             {
                                 Alias = configuration.DefaultArguments.ExecuteAlias,
                                 InstructionsFrom = InstructionsFrom.Configuration

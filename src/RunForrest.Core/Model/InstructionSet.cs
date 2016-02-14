@@ -39,7 +39,7 @@ namespace RunForrest.Core.Model
         {
             var appInstructions = new ApplicationInstructions(configuration)
             {
-                ExecuteAlias = new ExecuteAlias {Alias = ExecuteAlias, InstructionsFrom = instructionsFrom}
+                ExecuteAlias = new ExecutionAlias {Alias = ExecuteAlias, InstructionsFrom = instructionsFrom}
             };
 
             foreach (var instruction in Instructions)
