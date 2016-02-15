@@ -11,6 +11,8 @@ namespace RunForrest.Core.Util
     {
         internal static int GetTaskPriority(this MethodInfo method)
         {
+            if (method.GetCustomAttribute<TaskAttribute>() == null) return 0;
+
             return method.GetCustomAttribute<TaskAttribute>().Priority;
         }
 

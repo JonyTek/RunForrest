@@ -76,21 +76,15 @@ namespace RunForrest.Core.Util
 
     public class ComplexTask<TInstance> : AbstractTask
     {
-        private object[] methodArguments;
-
-        private Type type => typeof (TInstance);
-
+        private readonly object[] methodArguments;
+        
         private Func<TInstance> Instance { get; set; }
-
-        public ComplexTask(MethodInfo method)
-            : base(method)
-        {
-        }
 
         internal ComplexTask(MethodInfo method, string alias, string description, object[] methodArguments, Func<TInstance> instance)
             :base(method, alias, description)
         {
             Instance = instance;
+            Type = typeof (TInstance);
             this.methodArguments = methodArguments;
         }
 
@@ -100,7 +94,7 @@ namespace RunForrest.Core.Util
 
             var instance = Instance != null
                 ? Instance()
-                : Util.Instance.Create(type, instructions.ConstructorArguments);
+                : Util.Instance.Create(Type, instructions.ConstructorArguments);
             var returnValue = Method.Invoke(instance, methodArguments);
 
             configuration.OnAfterEachTask(this, returnValue);
@@ -120,12 +114,13 @@ namespace RunForrest.Core.Util
             Alias = alias;
             Priority = priority;
             Description = description;
-            MethodParameters = method.GetParameters();
         }
+
+        protected Type Type { get; set; }
 
         internal MethodInfo Method { get; }
 
-        protected ParameterInfo[] MethodParameters { get; set; }
+        protected ParameterInfo[] MethodParameters => Method.GetParameters();
 
         public int Priority { get; protected set; }
 
