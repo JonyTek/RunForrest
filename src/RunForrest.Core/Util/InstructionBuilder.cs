@@ -14,8 +14,8 @@ namespace RunForrest.Core.Util
         {
             this.configuration = configuration;
 
-            consoleInstructions = new ConsoleInstructionMapper(arguments).ParseInstructions();
-            configInstructions = new ConfigurationInstructionMapper(configuration).ParseInstructions();
+            consoleInstructions = new ConsoleInstructionMapper(arguments).MapInstructions();
+            configInstructions = new ConfigurationInstructionMapper(configuration).MapInstructions();
         }
 
         private void UpdateFor(InstructionType instructionType, ApplicationInstructions instructions)

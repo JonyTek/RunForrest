@@ -15,6 +15,7 @@ namespace RunForrest.Core.Model
             ConsoleColor = ConsoleColor.DarkGreen;
             DefaultArguments = new DefaultArguments
             {
+                ExecuteAlias = string.Empty,
                 MethodArguments = new string[0],
                 ConstructorArguments = new string[0]
             };

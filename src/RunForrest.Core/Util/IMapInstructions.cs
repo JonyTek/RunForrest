@@ -2,8 +2,8 @@
 
 namespace RunForrest.Core.Util
 {
-    internal interface IParseInstructions
+    internal interface IMapInstructions
     {
-        InstructionSet ParseInstructions();
+        InstructionSet MapInstructions();
     }
 }

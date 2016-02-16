@@ -54,10 +54,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="InstructionParserSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks.cs" />
+    <Compile Include="Util\BoolExtensionsSpecs.cs" />
+    <Compile Include="Util\ConfigurationInstructionMapperSpecs.cs" />
+    <Compile Include="Util\ConsoleInstructionMapperSpecs.cs" />
     <Compile Include="Util\Extensions.cs" />
+    <Compile Include="Util\InstructionBuilderSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RunForrest.Core\RunForrest.Core.csproj">

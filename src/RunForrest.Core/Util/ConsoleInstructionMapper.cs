@@ -3,7 +3,7 @@ using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
-    internal class ConsoleInstructionMapper : IParseInstructions
+    internal class ConsoleInstructionMapper : IMapInstructions
     {
         private readonly string[] arguments;
 
@@ -12,7 +12,7 @@ namespace RunForrest.Core.Util
             this.arguments = arguments;
         }
 
-        public InstructionSet ParseInstructions()
+        public InstructionSet MapInstructions()
         {
             var index = 0;
             var set = new InstructionSet(InstructionsFrom.Console);

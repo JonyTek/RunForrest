@@ -3,7 +3,7 @@ using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {
-    internal class ConfigurationInstructionMapper : IParseInstructions
+    internal class ConfigurationInstructionMapper : IMapInstructions
     {
         private readonly ApplicationConfiguration configuration;
 
@@ -12,7 +12,7 @@ namespace RunForrest.Core.Util
             this.configuration = configuration;
         }
 
-        public InstructionSet ParseInstructions()
+        public InstructionSet MapInstructions()
         {
             var set = new InstructionSet(InstructionsFrom.Configuration)
             {
@@ -24,7 +24,7 @@ namespace RunForrest.Core.Util
                     new Instruction
                     {
                         InstructionType = InstructionType.Constructor,
-                        Arguments = new string[0],
+                        Arguments = configuration.DefaultArguments.ConstructorArguments,
                         InstructionsFrom = InstructionsFrom.Configuration
                     }));
             configuration.DefaultArguments.MethodArguments.Any()
@@ -32,7 +32,7 @@ namespace RunForrest.Core.Util
                     new Instruction
                     {
                         InstructionType = InstructionType.Method,
-                        Arguments = new string[0],
+                        Arguments = configuration.DefaultArguments.MethodArguments,
                         InstructionsFrom = InstructionsFrom.Configuration
                     }));
             configuration.IsInGroupMode
