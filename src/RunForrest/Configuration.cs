@@ -1,8 +1,6 @@
 ﻿using System;
-using RunForrest.Core.Ioc;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
-using RunForrest.Services;
 
 namespace RunForrest
 {
@@ -24,7 +22,9 @@ namespace RunForrest
                 Printer.Print(ConsoleColor.DarkGreen, "Completed {0}", task.Alias);
             };
 
-            configuration.SetIsInVerbodeMode(true).ApplyConfigurations();
+            configuration.SetIsInVerbodeMode(true);
+
+            //.ApplyConfigurations();
         }
     }
 }

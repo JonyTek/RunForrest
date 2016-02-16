@@ -20,53 +20,38 @@ namespace RunForrest.Core.Runners
             var sw = Stopwatch.StartNew();
             var isTimedMode = instructions.TimedMode || configuration.IsTimedMode;
 
-
-            if (instructions.ParallelMode)
+            if (isTimedMode)
             {
-                Parallel.ForEach(taskCollection.Tasks, task =>
-                {
-                    task.Execute(configuration, instructions);
-                });                
+                Printer.Info("Starting execution at: {0}", DateTime.Now.ToString("O"));
             }
-            else
+
+            try
             {
-                foreach (var task in taskCollection.Tasks)
+                if (instructions.ParallelMode)
                 {
-                    task.Execute(configuration, instructions);
+                    Parallel.ForEach(taskCollection.Tasks, task =>
+                    {
+                        task.Execute(configuration, instructions);
+                    });
+                }
+                else
+                {
+                    foreach (var task in taskCollection.Tasks)
+                    {
+                        task.Execute(configuration, instructions);
+                    }
                 }
             }
-            
+            finally
+            {
+                sw.Stop();
 
-            /* 
-            
-            TODO: Add group help -g -h - print details
-            for -h we need to print if constructor arg?
-            
-            add OnBeforeGroupExecution  and after hook
-            
-            */
-
-            
-            //if (isTimedMode)
-            //{
-            //    Printer.Info("Starting execution at: {0}", DateTime.Now.ToString("O"));
-            //}
-
-            //try
-            //{
-            //    TaskCollection.SelectTask(instructions.TaskAlias)
-            //        .Execute(instructions.ConstructorArguments, instructions.MethodArguments);
-            //}
-            //finally
-            //{
-            //    sw.Stop();
-
-            //    if (isTimedMode)
-            //    {
-            //        Printer.Info("Finished execution at: {0}", DateTime.Now.ToString("O"));
-            //        Printer.Info("Total execution time: {0}ms", sw.ElapsedMilliseconds);
-            //    }
-            //}
+                if (isTimedMode)
+                {
+                    Printer.Info("Finished execution at: {0}", DateTime.Now.ToString("O"));
+                    Printer.Info("Total execution time: {0}ms", sw.ElapsedMilliseconds);
+                }
+            }
         }
     }
 }

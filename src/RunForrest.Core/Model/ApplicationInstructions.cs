@@ -13,6 +13,7 @@ namespace RunForrest.Core.Model
         internal ApplicationInstructions(ApplicationConfiguration configuration)
         {
             this.configuration = configuration;
+            ExecuteAlias = new ExecutionAlias();
             Instructions = new Dictionary<InstructionType, Instruction>();
         }
 
@@ -37,6 +38,10 @@ namespace RunForrest.Core.Model
                 if (Instructions.ContainsKey(InstructionType.DisplayList))
                 {
                     return ApplicationMode.List;
+                }
+                if(string.IsNullOrEmpty(ExecuteAlias.Alias))
+                {
+                    return ApplicationMode.Help;
                 }
 
                 return Instructions.ContainsKey(InstructionType.Group) ? ApplicationMode.Group : ApplicationMode.Single;

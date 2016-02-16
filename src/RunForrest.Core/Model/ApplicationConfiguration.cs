@@ -84,12 +84,12 @@ namespace RunForrest.Core.Model
 
             Validate.Configuartions(configurations);
 
-            DependencyManager.Instance.Build();
-
             var configurer = Instance.Create(configurations.First()) as IConfigureRunForrest;
             configurer.Setup(appConfiguration);
 
             appConfiguration.ConfigureComplexTasks();
+
+            DependencyManager.Instance.Build();
 
             return appConfiguration;
         }
@@ -101,11 +101,11 @@ namespace RunForrest.Core.Model
 
             foreach (var configuration in configurations)
             {
-                var confgurer = Instance.Create(configuration, null);
+                var configurer = Instance.Create(configuration, null);
                 var setupMethod = configuration.GetMethod("Setup", bindingFlags);
                 var taskConfiguration = Instance.Create(setupMethod.GetParameters().First().ParameterType, null);
 
-                setupMethod.Invoke(confgurer, new[] { taskConfiguration });
+                setupMethod.Invoke(configurer, new[] { taskConfiguration });
                 var task = ((AbstractComplexTaskConfiguration) taskConfiguration).ToTask();
 
                 TaskCollection.InsertTask(task.Alias, task);
@@ -143,9 +143,9 @@ namespace RunForrest.Core.Model
             return this;
         }
 
-        public void ApplyConfigurations()
-        {
-            Ioc.RegisterConcreteTypeNotAlreadyRegisteredSource();
-        }
+        //public void ApplyConfigurations()
+        //{
+        //    Ioc.RegisterConcreteTypeNotAlreadyRegisteredSource();
+        //}
     }
 }

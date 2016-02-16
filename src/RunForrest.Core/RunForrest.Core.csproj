@@ -46,7 +46,11 @@
   <ItemGroup>
     <Compile Include="Attributes\TaskGroupAttribute.cs" />
     <Compile Include="Ioc\DependencyManager.cs" />
+    <Compile Include="Model\AbstractComplexTaskConfiguration.cs" />
+    <Compile Include="Model\AbstractTask.cs" />
     <Compile Include="Model\ApplicationMode.cs" />
+    <Compile Include="Model\ComplexTask.cs" />
+    <Compile Include="Model\ComplexTaskConfiguration.cs" />
     <Compile Include="Model\DefaultArguments.cs" />
     <Compile Include="Model\ExecutionAlias.cs" />
     <Compile Include="Model\Instruction.cs" />

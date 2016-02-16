@@ -1,5 +1,4 @@
-﻿using System;
-using RunForrest.Core.Ioc;
+﻿using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 using RunForrest.Services;
 
@@ -13,10 +12,9 @@ namespace RunForrest.ComplexTasks
             configuration.Ioc.Register<IComplexTask, MyComplexTask>();
 
             configuration.WithAlias("alias");
+            configuration.WithDescription("my sescription");
             configuration.OnMethodWithName("sayhello");
             configuration.WithMethodArguments(new object[0]);
-
-            //configuration.OnInstance(() => new MyComplexTask(new Service()));
         }
     }
 }

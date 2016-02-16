@@ -58,6 +58,7 @@ namespace RunForrest.Core.Util
             UpdateFor(InstructionType.Group, instructions);
             UpdateFor(InstructionType.Timed, instructions);
             UpdateFor(InstructionType.Verbose, instructions);
+            UpdateFor(InstructionType.Parallel, instructions);
         }
     }
 }

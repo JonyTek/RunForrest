@@ -39,12 +39,7 @@ namespace RunForrest.Core.Model
 
         internal static void Initialise<T>(ApplicationConfiguration config)
         {
-            var assemblies = new[] {typeof (T).Assembly}.ToList();
-
-            if (config.AdditionalAssembliesToScanForTasks != null)
-            {
-                assemblies.AddRange(config.AdditionalAssembliesToScanForTasks.Values);
-            }
+            var assemblies = config.AllAssembliesToScan;
 
             foreach (var task in assemblies.SelectMany(x => x.ScanForSingleTasks()))
             {
