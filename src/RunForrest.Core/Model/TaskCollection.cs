@@ -7,9 +7,9 @@ namespace RunForrest.Core.Model
 {
     internal static class TaskCollection
     {
-        private static readonly Dictionary<string, AbstractTask> Tasks = new Dictionary<string, AbstractTask>();
+        private static Dictionary<string, AbstractTask> Tasks = new Dictionary<string, AbstractTask>();
 
-        private static readonly Dictionary<string, TaskGroup> TaskGroups = new Dictionary<string, TaskGroup>();
+        private static Dictionary<string, TaskGroup> TaskGroups = new Dictionary<string, TaskGroup>();
 
         internal static void InsertTask(string alias, AbstractTask task)
         {
@@ -37,7 +37,7 @@ namespace RunForrest.Core.Model
             TaskGroups.Add(lowerAlias, group);
         }
 
-        internal static void Initialise<T>(ApplicationConfiguration config)
+        internal static void Initialise(ApplicationConfiguration config)
         {
             var assemblies = config.AllAssembliesToScan;
 

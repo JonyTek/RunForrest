@@ -19,9 +19,7 @@ namespace RunForrest.Core.Util
 
         public static void Info(string output)
         {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine(output);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Print(ConsoleColor.DarkCyan, output);
         }
 
         public static void Print(ConsoleColor color, string output)
@@ -43,9 +41,7 @@ namespace RunForrest.Core.Util
 
         public static void Error(string output)
         {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(output);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Print(ConsoleColor.DarkRed, output);
         }
 
         public static void Error(Exception ex)

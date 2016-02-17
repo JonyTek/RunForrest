@@ -2,12 +2,12 @@
 
 namespace RunForrest.Core.Util
 {
-    public interface IConigureComplexTask<TInstance> : IConigureComplexTask
+    public interface IConfigureComplexTask<TInstance> : IConfigureComplexTask
     {
         void Setup(ComplexTaskConfiguration<TInstance> configuration);
     }
 
-    public interface IConigureComplexTask
+    public interface IConfigureComplexTask
     {
     }
 }

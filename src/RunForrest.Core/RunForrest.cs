@@ -11,11 +11,11 @@ namespace RunForrest.Core
         {
             try
             {
-                var config = ApplicationConfiguration.ConfigureApp<T>();
+                var config = ApplicationConfiguration.Bootstrap<T>();
 
                 Printer.Configure(config);
 
-                TaskCollection.Initialise<T>(config);
+                TaskCollection.Initialise(config);
 
                 var instructions = new InstructionBuilder(arguments, config).Build();
 

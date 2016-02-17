@@ -5,7 +5,7 @@ namespace RunForrest.ComplexTasks
 {
     public interface IComplexTask
     {
-        void SayHello();
+        void SayHello(string yo);
     }
 
     public class MyComplexTask : IComplexTask
@@ -17,8 +17,10 @@ namespace RunForrest.ComplexTasks
             this.service = service;
         }
 
-        public void SayHello()
+        public void SayHello(string yo)
         {
+            Console.WriteLine(yo);
+
             Console.WriteLine("Hi, {0}", service.Name);
         }
     }

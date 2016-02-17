@@ -28,9 +28,9 @@ namespace RunForrest.Core.Ioc
 
         #endregion
 
-        internal ContainerBuilder Builder { get; }
+        private ContainerBuilder Builder { get; }
 
-        internal IContainer Container { get; set; }
+        private IContainer Container { get; set; }
 
         private DependencyManager()
         {
@@ -39,12 +39,8 @@ namespace RunForrest.Core.Ioc
 
         internal void Build()
         {
-            Container = Builder.Build();
-        }
-
-        internal void RegisterConcreteTypeNotAlreadyRegisteredSource()
-        {
             Builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
+            Container = Builder.Build();
         }
 
         public void RegisterSingleton<TInterface, TConcrete>()
@@ -59,29 +55,23 @@ namespace RunForrest.Core.Ioc
             Builder.RegisterType<TConcrete>().As<TInterface>();
         }
 
-        public TInterface Resolve<TInterface>()
-        {
-            TInterface resolved;
-            using (var scope = Container.BeginLifetimeScope())
-            {
-                resolved = scope.Resolve<TInterface>();
-            }
-
-            return resolved;
-        }
-
-        public T Resolve<T>(Type type)
-            where T : class
-        {
-            return Resolve(type) as T;
-        }
-
         public object Resolve(Type type)
         {
             object resolved;
             using (var scope = Container.BeginLifetimeScope())
             {
                 resolved = scope.Resolve(type);
+            }
+
+            return resolved;
+        }
+
+        public TInterface Resolve<TInterface>()
+        {
+            TInterface resolved;
+            using (var scope = Container.BeginLifetimeScope())
+            {
+                resolved = scope.Resolve<TInterface>();
             }
 
             return resolved;

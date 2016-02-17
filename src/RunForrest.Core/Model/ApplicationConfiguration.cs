@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using RunForrest.Core.Ioc;
@@ -26,11 +25,11 @@ namespace RunForrest.Core.Model
 
         public ConsoleColor ConsoleColor { internal get; set; }
 
-        public bool IsInGroupMode { internal get; set; }
+        internal bool IsInGroupMode { get; set; }
 
-        public bool IsTimedMode { internal get; set; }
+        internal bool IsTimedMode { get; set; }
 
-        public bool IsVerbodeMode { internal get; set; }
+        internal bool IsVerbodeMode { get; set; }
 
         public DefaultArguments DefaultArguments { get; }
 
@@ -38,7 +37,7 @@ namespace RunForrest.Core.Model
 
         public Action<AbstractTask, object> OnAfterEachTask { internal get; set; }
 
-        internal Dictionary<string, Assembly> AdditionalAssembliesToScanForTasks { get; set; }
+        private Dictionary<string, Assembly> AdditionalAssembliesToScanForTasks { get; set; }
 
         internal Assembly[] AllAssembliesToScan
             => AdditionalAssembliesToScanForTasks.Values.Concat(new[] {configurationLocation}).ToArray();
@@ -50,7 +49,7 @@ namespace RunForrest.Core.Model
         public void AddAdditionalAssemblyToScanForTasks<T>()
             where T : class
         {
-            var assembly = typeof(T).Assembly;
+            var assembly = typeof (T).Assembly;
             AddAdditionalAssemblyToScanForTasks(assembly);
         }
 
@@ -73,19 +72,20 @@ namespace RunForrest.Core.Model
             return this;
         }
 
-        internal static ApplicationConfiguration ConfigureApp<TConfiguration>()
+        internal static ApplicationConfiguration Bootstrap<TConfiguration>(bool ignoreConfig = false)
             where TConfiguration : class
         {
             var assembly = typeof (TConfiguration).Assembly;
             var configurations = assembly.GetRunForrestConfigurations().ToArray();
             var appConfiguration = new ApplicationConfiguration {configurationLocation = assembly};
 
-            if (!configurations.Any()) return appConfiguration;
+            if (configurations.Any() && !ignoreConfig)
+            {
+                Validate.Configuartions(configurations);
 
-            Validate.Configuartions(configurations);
-
-            var configurer = Instance.Create(configurations.First()) as IConfigureRunForrest;
-            configurer.Setup(appConfiguration);
+                var configurer = Instance.Create(configurations.First()) as IConfigureRunForrest;
+                configurer?.Setup(appConfiguration);
+            }
 
             appConfiguration.ConfigureComplexTasks();
 
@@ -101,11 +101,11 @@ namespace RunForrest.Core.Model
 
             foreach (var configuration in configurations)
             {
-                var configurer = Instance.Create(configuration, null);
+                var configurer = Instance.Create(configuration);
                 var setupMethod = configuration.GetMethod("Setup", bindingFlags);
-                var taskConfiguration = Instance.Create(setupMethod.GetParameters().First().ParameterType, null);
+                var taskConfiguration = Instance.Create(setupMethod.GetParameters().First().ParameterType);
 
-                setupMethod.Invoke(configurer, new[] { taskConfiguration });
+                setupMethod.Invoke(configurer, new[] {taskConfiguration});
                 var task = ((AbstractComplexTaskConfiguration) taskConfiguration).ToTask();
 
                 TaskCollection.InsertTask(task.Alias, task);
@@ -142,10 +142,5 @@ namespace RunForrest.Core.Model
             DefaultArguments.ExecuteAlias = alias;
             return this;
         }
-
-        //public void ApplyConfigurations()
-        //{
-        //    Ioc.RegisterConcreteTypeNotAlreadyRegisteredSource();
-        //}
     }
 }

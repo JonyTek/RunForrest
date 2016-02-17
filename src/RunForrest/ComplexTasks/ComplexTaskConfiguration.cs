@@ -4,7 +4,7 @@ using RunForrest.Services;
 
 namespace RunForrest.ComplexTasks
 {
-    public class ComplexTaskConfiguration : IConigureComplexTask<IComplexTask>
+    public class ComplexTaskConfiguration : IConfigureComplexTask<IComplexTask>
     {
         public void Setup(ComplexTaskConfiguration<IComplexTask> configuration)
         {

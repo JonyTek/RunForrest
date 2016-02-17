@@ -74,7 +74,7 @@ namespace RunForrest.Core.Util
         {
             return
                 type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                    .FirstOrDefault(x => String.Equals(x.Name, name,
+                    .FirstOrDefault(x => string.Equals(x.Name, name,
                         StringComparison.CurrentCultureIgnoreCase));
         }
 
@@ -95,7 +95,7 @@ namespace RunForrest.Core.Util
 
         internal static IEnumerable<Type> GetComplexTaskConfigurations(this Assembly assembly)
         {
-            return assembly.GetTypes().Where(x => typeof(IConigureComplexTask).IsAssignableFrom(x));
+            return assembly.GetTypes().Where(x => typeof(IConfigureComplexTask).IsAssignableFrom(x));
         }
     }
 }

@@ -57,7 +57,7 @@
     <Compile Include="Model\InstructionSet.cs" />
     <Compile Include="Model\InstructionsFrom.cs" />
     <Compile Include="Util\Constants.cs" />
-    <Compile Include="Util\IConigureComplexTask.cs" />
+    <Compile Include="Util\IConfigureComplexTask.cs" />
     <Compile Include="Util\IMapInstructions.cs" />
     <Compile Include="Model\TaskGroup.cs" />
     <Compile Include="Model\ApplicationInstructions.cs" />
