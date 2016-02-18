@@ -66,7 +66,7 @@ namespace RunForrest.Core.Model
                 ? null
                 : Instructions[InstructionType.Method].Arguments.ToArray();
 
-        internal IExecuteInstructions Runner
+        private IExecuteInstructions Runner
         {
             get
             {

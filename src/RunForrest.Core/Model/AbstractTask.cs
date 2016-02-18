@@ -20,7 +20,7 @@ namespace RunForrest.Core.Model
             Description = description ?? Constants.NoDescriptionText;
         }
 
-        protected Type Type { get; set; }
+        protected Type ExecuteOn { get; set; }
 
         internal MethodInfo Method { get; }
 

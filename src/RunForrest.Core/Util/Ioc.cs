@@ -2,24 +2,24 @@
 using Autofac;
 using Autofac.Features.ResolveAnything;
 
-namespace RunForrest.Core.Ioc
+namespace RunForrest.Core.Util
 {
-    public class DependencyManager
+    public class Ioc
     {
         #region Singleton
 
-        private static DependencyManager instance;
+        private static Ioc instance;
 
         private static readonly object LockObject = new object();
 
-        public static DependencyManager Instance
+        public static Ioc Container
         {
             get
             {
                 lock (LockObject)
                 {
                     if (instance == null)
-                        instance = new DependencyManager();
+                        instance = new Ioc();
 
                     return instance;
                 }
@@ -28,37 +28,37 @@ namespace RunForrest.Core.Ioc
 
         #endregion
 
-        private ContainerBuilder Builder { get; }
+        private readonly ContainerBuilder builder;
 
-        private IContainer Container { get; set; }
+        private IContainer container;
 
-        private DependencyManager()
+        private Ioc()
         {
-            Builder = new ContainerBuilder();
+            builder = new ContainerBuilder();
         }
 
         internal void Build()
         {
-            Builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
-            Container = Builder.Build();
+            builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
+            container = builder.Build();
         }
 
         public void RegisterSingleton<TInterface, TConcrete>()
             where TConcrete : TInterface
         {
-            Builder.RegisterType<TConcrete>().As<TInterface>().SingleInstance();
+            builder.RegisterType<TConcrete>().As<TInterface>().SingleInstance();
         }
 
         public void Register<TInterface, TConcrete>()
            where TConcrete : TInterface
         {
-            Builder.RegisterType<TConcrete>().As<TInterface>();
+            builder.RegisterType<TConcrete>().As<TInterface>();
         }
 
         public object Resolve(Type type)
         {
             object resolved;
-            using (var scope = Container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 resolved = scope.Resolve(type);
             }
@@ -69,7 +69,7 @@ namespace RunForrest.Core.Ioc
         public TInterface Resolve<TInterface>()
         {
             TInterface resolved;
-            using (var scope = Container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 resolved = scope.Resolve<TInterface>();
             }

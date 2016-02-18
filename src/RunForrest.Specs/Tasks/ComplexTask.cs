@@ -1,4 +1,6 @@
-﻿using RunForrest.Core.Model;
+﻿using System;
+using System.Runtime.Remoting.Messaging;
+using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 using RunForrest.Specs.Services;
 
@@ -31,6 +33,8 @@ namespace RunForrest.Specs.Tasks
             configuration.WithAlias("complextaskasinterface");
             configuration.WithDescription("this is my description");
             configuration.OnMethodWithName("dosomething");
+
+            configuration.WithOnAfterTask((task, ret) => { Console.WriteLine(ret); });
         }
     }
 

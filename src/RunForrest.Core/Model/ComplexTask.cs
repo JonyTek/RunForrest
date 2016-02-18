@@ -10,22 +10,35 @@ namespace RunForrest.Core.Model
 
         private Func<TInstance> Instance { get; set; }
 
-        internal ComplexTask(MethodInfo method, string alias, string description, object[] methodArguments, Func<TInstance> instance)
-            : base(method, alias, description)
+        private readonly Action<AbstractTask> onBeforeEachTask;
+
+        private readonly Action<AbstractTask, object> onAfterEachTask;
+
+        internal ComplexTask(MethodInfo method, string alias, string description, object[] methodArguments,
+            Func<TInstance> instance, int priority, Action<AbstractTask> onBeforeEachTask,
+            Action<AbstractTask, object> onAfterEachTask)
+            : base(method, alias, description, priority)
         {
             Instance = instance;
-            Type = typeof(TInstance);
+            ExecuteOn = typeof (TInstance);
+
             this.methodArguments = methodArguments;
+            this.onBeforeEachTask = onBeforeEachTask ?? (task => { });
+            this.onAfterEachTask = onAfterEachTask ?? ((task, ret) => { });
         }
 
         internal override void Execute(ApplicationConfiguration configuration, ApplicationInstructions instructions)
         {
             configuration.OnBeforeEachTask(this);
 
+            onBeforeEachTask(this);
+
             var instance = Instance != null
                 ? this.Instance()
-                : Util.Instance.Create(Type, instructions.ConstructorArguments);
+                : Util.Instance.Create(ExecuteOn, instructions.ConstructorArguments);
             var returnValue = Method.Invoke(instance, methodArguments);
+
+            onAfterEachTask(this, returnValue);
 
             configuration.OnAfterEachTask(this, returnValue);
         }

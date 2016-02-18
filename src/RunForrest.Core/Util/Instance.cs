@@ -1,5 +1,4 @@
 ﻿using System;
-using RunForrest.Core.Ioc;
 
 namespace RunForrest.Core.Util
 {
@@ -9,7 +8,7 @@ namespace RunForrest.Core.Util
         {
             try
             {
-                return args == null ? DependencyManager.Instance.Resolve(type) : Activator.CreateInstance(type, args);
+                return args == null ? Ioc.Container.Resolve(type) : Activator.CreateInstance(type, args);
             }
             catch (MissingMethodException ex)
             {

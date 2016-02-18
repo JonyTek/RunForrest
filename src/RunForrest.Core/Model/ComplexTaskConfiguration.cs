@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using RunForrest.Core.Ioc;
 using RunForrest.Core.Util;
+using Ioc = RunForrest.Core.Util.Ioc;
 
 namespace RunForrest.Core.Model
 {
@@ -17,7 +17,13 @@ namespace RunForrest.Core.Model
 
         private string description;
 
-        public DependencyManager Ioc => DependencyManager.Instance;
+        private int priority;
+
+        private Action<AbstractTask> onBeforeEachTask;
+
+        private Action<AbstractTask, object> onAfterEachTask;        
+
+        public Ioc Ioc => Ioc.Container;
 
         public ComplexTaskConfiguration<TInstance> WithAlias(string alias)
         {
@@ -25,9 +31,9 @@ namespace RunForrest.Core.Model
             return this;
         }
 
-        public ComplexTaskConfiguration<TInstance> WithDescription(string desc)
+        public ComplexTaskConfiguration<TInstance> WithDescription(string description)
         {
-            this.description = desc;
+            this.description = description;
             return this;
         }
 
@@ -51,6 +57,24 @@ namespace RunForrest.Core.Model
             return this;
         }
 
+        public ComplexTaskConfiguration<TInstance> WithPriority(int priority)
+        {
+            this.priority = priority;
+            return this;
+        }
+
+        public ComplexTaskConfiguration<TInstance> WithOnBeforeTask(Action<AbstractTask> onBeforeEachTask)
+        {
+            this.onBeforeEachTask = onBeforeEachTask;
+            return this;
+        }
+
+        public ComplexTaskConfiguration<TInstance> WithOnAfterTask(Action<AbstractTask, object> onAfterEachTask)
+        {
+            this.onAfterEachTask = onAfterEachTask;
+            return this;
+        }
+
         public ComplexTaskConfiguration<TInstance> WithMethodArguments(object[] arguments)
         {
             methodArguments = arguments;
@@ -63,8 +87,8 @@ namespace RunForrest.Core.Model
                 throw new InvalidOperationException(string.Format("No method found for {0}", method));
             if (string.IsNullOrEmpty(alias))
                 throw new InvalidOperationException(string.Format("No alias specified for {0}", method));
-
-            return new ComplexTask<TInstance>(method, alias, description, methodArguments, instance);
+            
+            return new ComplexTask<TInstance>(method, alias, description, methodArguments, instance, priority, onBeforeEachTask, onAfterEachTask);
         }
     }
 }

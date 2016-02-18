@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\TaskGroupAttribute.cs" />
-    <Compile Include="Ioc\DependencyManager.cs" />
+    <Compile Include="Util\Ioc.cs" />
     <Compile Include="Model\AbstractComplexTaskConfiguration.cs" />
     <Compile Include="Model\AbstractTask.cs" />
     <Compile Include="Model\ApplicationMode.cs" />

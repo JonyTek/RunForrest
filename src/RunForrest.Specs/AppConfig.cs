@@ -1,5 +1,4 @@
 ﻿using System;
-using RunForrest.Core.Ioc;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 using RunForrest.Specs.Services;
@@ -19,11 +18,11 @@ namespace RunForrest.Specs
             RegisterDependencies(configuration.Ioc);
         }
 
-        private static void RegisterDependencies(DependencyManager manager)
+        private static void RegisterDependencies(Ioc container)
         {
-            manager.Register<IService, Service>();
-            manager.Register<IRepository, Repository>();
-            manager.Register<IComplexTask, ComplexTask>();
+            container.Register<IService, Service>();
+            container.Register<IRepository, Repository>();
+            container.Register<IComplexTask, ComplexTask>();
         }
     }
 }

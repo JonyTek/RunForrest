@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using RunForrest.Core.Ioc;
 using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Model
@@ -37,14 +36,14 @@ namespace RunForrest.Core.Model
 
         public Action<AbstractTask, object> OnAfterEachTask { internal get; set; }
 
-        private Dictionary<string, Assembly> AdditionalAssembliesToScanForTasks { get; set; }
+        private Dictionary<string, Assembly> AdditionalAssembliesToScanForTasks { get; }
 
         internal Assembly[] AllAssembliesToScan
             => AdditionalAssembliesToScanForTasks.Values.Concat(new[] {configurationLocation}).ToArray();
 
         private Assembly configurationLocation;
 
-        public DependencyManager Ioc => DependencyManager.Instance;
+        public Ioc Ioc => Ioc.Container;
 
         public void AddAdditionalAssemblyToScanForTasks<T>()
             where T : class
@@ -63,7 +62,7 @@ namespace RunForrest.Core.Model
             }
         }
 
-        public ApplicationConfiguration SetAdditionalAssembliesToScanForTasks(Assembly[] assemblies)
+        public ApplicationConfiguration AddAdditionalAssembliesToScanForTasks(Assembly[] assemblies)
         {
             foreach (var assembly in assemblies)
             {
@@ -89,7 +88,7 @@ namespace RunForrest.Core.Model
 
             appConfiguration.ConfigureComplexTasks();
 
-            DependencyManager.Instance.Build();
+            Ioc.Container.Build();
 
             return appConfiguration;
         }

@@ -7,7 +7,7 @@ namespace RunForrest.Core.Runners
     {
         public void Execute(ApplicationInstructions instructions, ApplicationConfiguration configuration)
         {
-            Console.WriteLine("Unkown Application Type!");
+            Console.WriteLine("Unkown Application ExecuteOn!");
         }
     }
 }
