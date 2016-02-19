@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
     <Compile Include="E2E\BasicTaskSpecs.cs" />
+    <Compile Include="E2E\TaskGroupSpecs.cs" />
     <Compile Include="Model\AbstractTaskSpecs.cs" />
     <Compile Include="Model\TaskCollectionSpecs.cs" />
     <Compile Include="Model\ApplicationConfigurationSpecs.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Util\ConfigurationInstructionMapperSpecs.cs" />
     <Compile Include="Util\ConsoleInstructionMapperSpecs.cs" />
     <Compile Include="Util\InstructionBuilderSpecs.cs" />
+    <Compile Include="Util\ReflectionExtensionsSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RunForrest.Core\RunForrest.Core.csproj">

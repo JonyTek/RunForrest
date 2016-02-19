@@ -1,5 +1,4 @@
-﻿using System;
-using RunForrest.Core.Model;
+﻿using RunForrest.Core.Model;
 
 namespace RunForrest.Core.Util
 {

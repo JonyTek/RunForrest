@@ -7,19 +7,6 @@ namespace RunForrest.Core.Model
 {
     public abstract class AbstractTask
     {
-        internal AbstractTask(MethodInfo method)
-            : this(method, method.GetTaskAlias(), method.GetTaskDescription(), method.GetTaskPriority())
-        {
-        }
-
-        internal AbstractTask(MethodInfo method, string alias, string description, int priority = 0)
-        {
-            Method = method;
-            Alias = alias;
-            Priority = priority;
-            Description = description ?? Constants.NoDescriptionText;
-        }
-
         protected Type ExecuteOn { get; set; }
 
         internal MethodInfo Method { get; }
@@ -34,6 +21,19 @@ namespace RunForrest.Core.Model
 
         public bool ReturnsValue => Method.ReturnType.Name == "Void";
 
+        internal AbstractTask(MethodInfo method)
+            : this(method, method.GetTaskAlias(), method.GetTaskGroupDescription(), method.GetTaskPriority())
+        {
+        }
+
+        internal AbstractTask(MethodInfo method, string alias, string description, int priority = 0)
+        {
+            Method = method;
+            Alias = alias;
+            Priority = priority;
+            Description = description ?? Constants.NoDescriptionText;
+        }
+
         public string UsageExample
         {
             get
@@ -47,7 +47,7 @@ namespace RunForrest.Core.Model
                         .Aggregate(usage, (current, parameter) => current + (parameter.Name + "> "));
                 }
 
-                return string.Format("<appname> {0} {1}", Method.GetTaskAlias(), usage);
+                return $"<appname> {Method.GetTaskAlias()} {usage}";
             }
         }
 
@@ -56,14 +56,15 @@ namespace RunForrest.Core.Model
             get
             {
                 var parmters = from x in MethodParameters.ToList()
-                               select string.Format("{0} {1}",
-                                   x.ParameterType.Name, x.Name);
+                    select $"{x.ParameterType.Name} {x.Name}";
 
-                return string.Format("public {0} {1}({2}){{ }}",
-                    Method.ReturnType.Name, Method.Name, string.Join(", ", parmters));
+                return $"public {Method.ReturnType.Name} {Method.Name}({string.Join(", ", parmters)}){{ }}";
             }
         }
 
-        internal abstract void Execute(ApplicationConfiguration configuration, ApplicationInstructions instructions);
+        internal abstract void Execute(ApplicationConfiguration configuration, ApplicationInstructions instructions,
+            object on = null);
+
+        internal abstract object InstanceToExecuteOn(object[] constructorArgs);
     }
 }

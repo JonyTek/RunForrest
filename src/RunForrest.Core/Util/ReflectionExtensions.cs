@@ -25,7 +25,7 @@ namespace RunForrest.Core.Util
             return alias.ToLower();
         }
 
-        internal static string GetTaskDescription(this MethodInfo method)
+        internal static string GetTaskGroupDescription(this MethodInfo method)
         {
             if (method.GetCustomAttribute<TaskAttribute>() == null) return null;
 
@@ -41,7 +41,7 @@ namespace RunForrest.Core.Util
             return alias.ToLower();
         }
 
-        internal static string GetTaskDescription(this Type type)
+        internal static string GetTaskGroupDescription(this Type type)
         {
             if (type.GetCustomAttribute<TaskGroupAttribute>() == null) return null;
 
@@ -65,7 +65,7 @@ namespace RunForrest.Core.Util
                 select new TaskGroup
                 {
                     Alias = taskGroup.GetTaskGroupAlias(),
-                    Description = taskGroup.GetTaskDescription(),
+                    Description = taskGroup.GetTaskGroupDescription(),
                     Tasks = tasks
                 };
         }

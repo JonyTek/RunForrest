@@ -6,18 +6,18 @@ namespace RunForrest.Core.Model
 {
     internal class InstructionSet
     {
+        internal string ExecuteAlias { get; set; }
+
+        internal InstructionsFrom InstructionsFrom { get; set; }
+
+        internal Collection<Instruction> Instructions { get; }
+
         internal InstructionSet(InstructionsFrom instructionsFrom)
         {
             ExecuteAlias = string.Empty;
             InstructionsFrom = instructionsFrom;
             Instructions = new Collection<Instruction>();
         }
-
-        internal string ExecuteAlias { get; set; }
-
-        internal InstructionsFrom InstructionsFrom { get; set; }
-
-        internal Collection<Instruction> Instructions { get; }
 
         internal Instruction ByType(InstructionType switchType)
         {

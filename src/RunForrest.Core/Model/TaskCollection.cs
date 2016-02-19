@@ -7,9 +7,9 @@ namespace RunForrest.Core.Model
 {
     internal static class TaskCollection
     {
-        private static Dictionary<string, AbstractTask> Tasks = new Dictionary<string, AbstractTask>();
+        private static readonly Dictionary<string, AbstractTask> Tasks = new Dictionary<string, AbstractTask>();
 
-        private static Dictionary<string, TaskGroup> TaskGroups = new Dictionary<string, TaskGroup>();
+        private static readonly Dictionary<string, TaskGroup> TaskGroups = new Dictionary<string, TaskGroup>();
 
         internal static void InsertTask(string alias, AbstractTask task)
         {
@@ -17,8 +17,7 @@ namespace RunForrest.Core.Model
 
             if (Tasks.ContainsKey(lowerAlias))
             {
-                throw new InvalidOperationException(
-                    string.Format("Task '{0}' with same alias already exists", alias));
+                throw new InvalidOperationException($"Task '{alias}' with same alias already exists");
             }
 
             Tasks.Add(lowerAlias, task);
@@ -30,8 +29,7 @@ namespace RunForrest.Core.Model
 
             if (TaskGroups.ContainsKey(lowerAlias))
             {
-                throw new InvalidOperationException(
-                    string.Format("Task group '{0}' with same alias already exists", alias));
+                throw new InvalidOperationException($"Task group '{alias}' with same alias already exists");
             }
 
             TaskGroups.Add(lowerAlias, group);
@@ -58,8 +56,7 @@ namespace RunForrest.Core.Model
 
             if (!Tasks.ContainsKey(lowerAlias))
             {
-                throw new KeyNotFoundException(
-                    string.Format("No task found by the alias of '{0}'", alias));
+                throw new KeyNotFoundException($"No task found by the alias of '{alias}'");
             }
 
             return Tasks[lowerAlias];
@@ -71,8 +68,7 @@ namespace RunForrest.Core.Model
 
             if (!TaskGroups.ContainsKey(lowerAlias))
             {
-                throw new KeyNotFoundException(
-                    string.Format("No task group found by the alias of '{0}'", alias));
+                throw new KeyNotFoundException($"No task group found by the alias of '{alias}'");
             }
 
             return TaskGroups[lowerAlias];

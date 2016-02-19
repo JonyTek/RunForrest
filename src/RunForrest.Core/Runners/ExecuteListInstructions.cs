@@ -25,7 +25,7 @@ namespace RunForrest.Core.Runners
 
         internal static void PrintTaskList()
         {
-            Printer.Info("TASKS:");
+            Printer.Print(ConsoleColor.Yellow, "TASKS:");
             foreach (var task in TaskCollection.GetTasks().OrderBy(x => x.Key))
             {
                 Printer.Info("taskalias - {0}\t\t{1}", task.Value.Alias, task.Value.Description);
@@ -37,7 +37,7 @@ namespace RunForrest.Core.Runners
 
         internal static void PrintTaskGroupList()
         {
-            Printer.Info("TASK GROUPS:");
+            Printer.Print(ConsoleColor.Yellow, "TASK GROUPS:");
             foreach (var group in TaskCollection.GetTaskGroups().OrderBy(x => x.Key))
             {
                 Printer.Info("groupalias - {0}\t\t{1}", group.Key, group.Value.Description);

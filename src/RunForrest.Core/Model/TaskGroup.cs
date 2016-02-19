@@ -17,5 +17,10 @@ namespace RunForrest.Core.Model
             get { return tasks.OrderBy(x => x.Priority); }
             set { tasks = value; }
         }
+
+        internal object ExecuteOnInstance(ApplicationInstructions instructions)
+        {
+            return tasks.ToInstanceToExecuteOn(instructions);
+        }
     }
 }

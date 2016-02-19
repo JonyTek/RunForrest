@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Model
 {
@@ -27,20 +26,22 @@ namespace RunForrest.Core.Model
             this.onAfterEachTask = onAfterEachTask ?? ((task, ret) => { });
         }
 
-        internal override void Execute(ApplicationConfiguration configuration, ApplicationInstructions instructions)
+        internal override void Execute(ApplicationConfiguration configuration, ApplicationInstructions instructions,
+            object on = null)
         {
             configuration.OnBeforeEachTask(this);
-
             onBeforeEachTask(this);
 
-            var instance = Instance != null
-                ? this.Instance()
-                : Util.Instance.Create(ExecuteOn, instructions.ConstructorArguments);
+            var instance = on ?? InstanceToExecuteOn(instructions.ConstructorArguments);
             var returnValue = Method.Invoke(instance, methodArguments);
 
             onAfterEachTask(this, returnValue);
-
             configuration.OnAfterEachTask(this, returnValue);
+        }
+
+        internal override object InstanceToExecuteOn(object[] constructorArgs)
+        {
+            return Instance != null ? Instance() : Util.Instance.Create(ExecuteOn, constructorArgs);
         }
     }
 }

@@ -8,20 +8,6 @@ namespace RunForrest.Core.Model
 {
     public class ApplicationConfiguration
     {
-        internal ApplicationConfiguration()
-        {
-            ConsoleColor = ConsoleColor.DarkGreen;
-            DefaultArguments = new DefaultArguments
-            {
-                ExecuteAlias = string.Empty,
-                MethodArguments = new string[0],
-                ConstructorArguments = new string[0]
-            };
-            OnBeforeEachTask = task => { };
-            OnAfterEachTask = (task, returnValue) => { };
-            AdditionalAssembliesToScanForTasks = new Dictionary<string, Assembly>();
-        }
-
         public ConsoleColor ConsoleColor { internal get; set; }
 
         internal bool IsInGroupMode { get; set; }
@@ -44,6 +30,20 @@ namespace RunForrest.Core.Model
         private Assembly configurationLocation;
 
         public Ioc Ioc => Ioc.Container;
+
+        internal ApplicationConfiguration()
+        {
+            ConsoleColor = ConsoleColor.DarkGreen;
+            DefaultArguments = new DefaultArguments
+            {
+                ExecuteAlias = string.Empty,
+                MethodArguments = new string[0],
+                ConstructorArguments = new string[0]
+            };
+            OnBeforeEachTask = task => { };
+            OnAfterEachTask = (task, returnValue) => { };
+            AdditionalAssembliesToScanForTasks = new Dictionary<string, Assembly>();
+        }
 
         public void AddAdditionalAssemblyToScanForTasks<T>()
             where T : class

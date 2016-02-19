@@ -13,7 +13,6 @@ namespace RunForrest.Specs.Model
         [SetUp]
         public void OnBeforeEachTest()
         {
-            TestHelper.Bootstrap();
             config = TestHelper.Config;
         }
 

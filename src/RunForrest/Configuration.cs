@@ -19,12 +19,11 @@ namespace RunForrest
                 {
                     Printer.Print(ConsoleColor.Blue, "{0}", returnValue);
                 }
+
                 Printer.Print(ConsoleColor.DarkGreen, "Completed {0}", task.Alias);
             };
 
             configuration.SetIsInVerbodeMode(true);
-
-            //.ApplyConfigurations();
         }
     }
 }

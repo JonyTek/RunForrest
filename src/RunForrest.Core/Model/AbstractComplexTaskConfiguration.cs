@@ -1,6 +1,4 @@
-﻿using RunForrest.Core.Util;
-
-namespace RunForrest.Core.Model
+﻿namespace RunForrest.Core.Model
 {
     public abstract class AbstractComplexTaskConfiguration
     {

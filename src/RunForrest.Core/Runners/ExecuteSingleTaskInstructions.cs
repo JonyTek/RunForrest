@@ -5,37 +5,22 @@ using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Runners
 {
-    internal class ExecuteSingleTaskInstructions : IExecuteInstructions
+    internal class ExecuteSingleTaskInstructions : ExecuteTimedTaskBase, IExecuteInstructions
     {
         public void Execute(ApplicationInstructions instructions, ApplicationConfiguration configuration)
         {
-            if (string.IsNullOrEmpty(instructions.ExecuteAlias.Alias))
-            {
-                throw new ArgumentException("Invalid arguments. Please specify as task alias.");
-            }
-
-            var sw = Stopwatch.StartNew();
+            Validate.ExecuteAlias(instructions.ExecuteAlias);
             var isTimedMode = instructions.TimedMode || configuration.IsTimedMode;
-
-            if (isTimedMode)
-            {
-                Printer.Info("Starting execution at: {0}", DateTime.Now.ToString("O"));
-            }
 
             try
             {
+                PrintStartTime(isTimedMode);
                 var task = TaskCollection.SelectTask(instructions.ExecuteAlias.Alias);
                 task.Execute(configuration, instructions);
             }
             finally
             {
-                sw.Stop();
-
-                if (isTimedMode)
-                {
-                    Printer.Info("Finished execution at: {0}", DateTime.Now.ToString("O"));
-                    Printer.Info("Total execution time: {0}ms", sw.ElapsedMilliseconds);
-                }
+                PrintEndTime(isTimedMode);
             }
         }
     }

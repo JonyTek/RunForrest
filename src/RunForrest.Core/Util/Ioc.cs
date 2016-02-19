@@ -18,10 +18,7 @@ namespace RunForrest.Core.Util
             {
                 lock (LockObject)
                 {
-                    if (instance == null)
-                        instance = new Ioc();
-
-                    return instance;
+                    return instance ?? (instance = new Ioc());
                 }
             }
         }

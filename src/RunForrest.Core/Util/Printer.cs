@@ -69,12 +69,12 @@ namespace RunForrest.Core.Util
             Info("Usage: <appname> <taskalias> <commands> ");
             Console.WriteLine();
             Info("-l -list\t\tlist available tasks\t\t<appname> -l");
-            Info("-t -timed\t\ttime task execution\t\t<appname> -t");
-            Info("-v -verbose\t\tprint exceptions to console\t<appname> -v");
+            Info("-t -timed\t\ttime task execution\t\t<appname> <taskalias> -t");
+            Info("-v -verbose\t\tprint exceptions to console\t<appname> <taskalias> -v");
             Info("-m -method\t\tpass method params\t\t<appname> <taskalias> -m arg1 arg2");
             Info("-c -constructor\t\tpass constructor args\t\t<appname> <taskalias> -c arg1 arg2");
             Info("-g -group\t\trun a group of tasks\t\t<appname> <groupalias> -g");
-            Info("-p -parra\t\trun a group in parralell\t<appname> <groupalias> -g -p");
+            Info("-p -parra\t\trun a group in paralell\t<appname> <groupalias> -g -p");
 
             Console.WriteLine();
             Info("Command v{0}", typeof(Printer).Assembly.GetName().Version.ToString());

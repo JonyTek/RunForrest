@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\TaskGroupAttribute.cs" />
+    <Compile Include="Runners\ExecuteTimedTaskBase.cs" />
+    <Compile Include="Util\EnumerableExtensions.cs" />
     <Compile Include="Util\Ioc.cs" />
     <Compile Include="Model\AbstractComplexTaskConfiguration.cs" />
     <Compile Include="Model\AbstractTask.cs" />

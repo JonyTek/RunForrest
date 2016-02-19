@@ -1,4 +1,8 @@
-﻿using RunForrest.Core.Model;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using System.Threading;
+using NUnit.Framework;
+using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 using RunForrest.Specs.Model;
 
@@ -7,6 +11,17 @@ namespace RunForrest.Specs
     public class TestHelper
     {
         public static string Value { get; set; }
+
+        public static string Value1 { get; set; }
+
+        public static string Value2 { get; set; }
+
+        public static List<object> Values { get; set; }
+
+        public static void ResetValueCollection()
+        {
+            Values = new List<object>();
+        }
 
         private static bool isSetup;
 
@@ -26,9 +41,18 @@ namespace RunForrest.Specs
 
         internal static ApplicationInstructions GenerateInstructions(string[] args, bool ignoreConfig = false)
         {
-            Bootstrap(ignoreConfig);
             Printer.Configure(Config);
             return new InstructionBuilder(args, Config).Build();
+        }
+    }
+
+    [SetUpFixture]
+    public class SetupFixture
+    {
+        [SetUp]
+        public void Enter()
+        {
+            TestHelper.Bootstrap();
         }
     }
 }

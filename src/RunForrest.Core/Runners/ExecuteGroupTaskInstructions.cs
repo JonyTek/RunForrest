@@ -1,57 +1,57 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using RunForrest.Core.Model;
 using RunForrest.Core.Util;
 
 namespace RunForrest.Core.Runners
 {
-    internal class ExecuteGroupTaskInstructions : IExecuteInstructions
+    internal class ExecuteGroupTaskInstructions : ExecuteTimedTaskBase, IExecuteInstructions
     {
         public void Execute(ApplicationInstructions instructions, ApplicationConfiguration configuration)
         {
-            if (string.IsNullOrEmpty(instructions.ExecuteAlias.Alias))
-            {
-                throw new ArgumentException("Invalid arguments. Please specify as task alias.");
-            }
+            Validate.ExecuteAlias(instructions.ExecuteAlias);
 
-            var taskCollection = TaskCollection.SelectTaskGroup(instructions.ExecuteAlias.Alias);
-
-            var sw = Stopwatch.StartNew();
             var isTimedMode = instructions.TimedMode || configuration.IsTimedMode;
+            var group = TaskCollection.SelectTaskGroup(instructions.ExecuteAlias.Alias);
 
-            if (isTimedMode)
-            {
-                Printer.Info("Starting execution at: {0}", DateTime.Now.ToString("O"));
-            }
+            Validate.TaskGroup(group);
 
             try
             {
+                PrintStartTime(isTimedMode);
+
                 if (instructions.ParallelMode)
                 {
-                    Parallel.ForEach(taskCollection.Tasks, task =>
-                    {
-                        task.Execute(configuration, instructions);
-                    });
+                    ExecuteASync(group, instructions, configuration);
                 }
                 else
                 {
-                    foreach (var task in taskCollection.Tasks)
-                    {
-                        task.Execute(configuration, instructions);
-                    }
+                    ExecuteSync(group, instructions, configuration);
                 }
             }
             finally
             {
-                sw.Stop();
-
-                if (isTimedMode)
-                {
-                    Printer.Info("Finished execution at: {0}", DateTime.Now.ToString("O"));
-                    Printer.Info("Total execution time: {0}ms", sw.ElapsedMilliseconds);
-                }
+                PrintEndTime(isTimedMode);
             }
+        }
+
+        private static void ExecuteSync(TaskGroup group, ApplicationInstructions instructions, ApplicationConfiguration configuration)
+        {
+            var groupInstance = group.ExecuteOnInstance(instructions);
+
+            foreach (var task in group.Tasks)
+            {
+                task.Execute(configuration, instructions, groupInstance);
+            }
+        }
+
+        private static void ExecuteASync(TaskGroup group, ApplicationInstructions instructions, ApplicationConfiguration configuration)
+        {
+            var groupInstance = group.ExecuteOnInstance(instructions);
+
+            Parallel.ForEach(group.Tasks, task =>
+            {
+                task.Execute(configuration, instructions, groupInstance);
+            });
         }
     }
 }

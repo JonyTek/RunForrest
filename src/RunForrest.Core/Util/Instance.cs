@@ -13,9 +13,7 @@ namespace RunForrest.Core.Util
             catch (MissingMethodException ex)
             {
                 var message =
-                    string.Format(
-                        "Failed to create type '{0}', please ensure you provide correct constructor arguments. -c arg0 arg1",
-                        type.FullName);
+                    $"Failed to create type '{type.FullName}', please ensure you provide correct constructor arguments. -c arg0 arg1";
 
                 throw new MissingMethodException(message, ex);
             }
@@ -29,7 +27,7 @@ namespace RunForrest.Core.Util
             }
             catch (MissingMethodException ex)
             {
-                var message = string.Format("Failed to create type '{0}'.", type.FullName);
+                var message = $"Failed to create type '{type.FullName}'.";
 
                 throw new MissingMethodException(message, ex);
             }

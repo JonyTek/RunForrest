@@ -21,7 +21,7 @@ namespace RunForrest.Core.Model
 
         private Action<AbstractTask> onBeforeEachTask;
 
-        private Action<AbstractTask, object> onAfterEachTask;        
+        private Action<AbstractTask, object> onAfterEachTask;
 
         public Ioc Ioc => Ioc.Container;
 
@@ -45,15 +45,9 @@ namespace RunForrest.Core.Model
 
         public ComplexTaskConfiguration<TInstance> OnMethodWithName(string name)
         {
-            method = typeof(TInstance).GetMethodByName(name);
-
-            if (method == null)
-            {
-                throw new InvalidOperationException(
-                    string.Format("No methond found '{0}' on type {1}", name,
-                        typeof(TInstance).Name));
-            }
-
+            var type = typeof (TInstance);
+            method = type.GetMethodByName(name);
+            Validate.MethodName(method, name, type);
             return this;
         }
 
@@ -84,11 +78,14 @@ namespace RunForrest.Core.Model
         internal override AbstractTask ToTask()
         {
             if (method == null)
-                throw new InvalidOperationException(string.Format("No method found for {0}", method));
+                throw new InvalidOperationException(
+                    string.Format("No method found for {0}", method));
             if (string.IsNullOrEmpty(alias))
-                throw new InvalidOperationException(string.Format("No alias specified for {0}", method));
-            
-            return new ComplexTask<TInstance>(method, alias, description, methodArguments, instance, priority, onBeforeEachTask, onAfterEachTask);
+                throw new InvalidOperationException(
+                    string.Format("No alias specified for {0}", method));
+
+            return new ComplexTask<TInstance>(method, alias, description, methodArguments, instance, priority,
+                onBeforeEachTask, onAfterEachTask);
         }
     }
 }

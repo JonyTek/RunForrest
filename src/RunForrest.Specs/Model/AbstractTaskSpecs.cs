@@ -9,7 +9,6 @@ namespace RunForrest.Specs.Model
         [Test]
         public void ShouldPrintMethodInfo()
         {
-            TestHelper.Bootstrap();
             var signature = TaskCollection.SelectTask("basictaskmethodargs").MethodSignature;
 
             Assert.That(signature, Is.EqualTo("public Void Method(String value){ }"));
@@ -18,7 +17,6 @@ namespace RunForrest.Specs.Model
         [Test]
         public void ShouldPrintMethodUsage()
         {
-            TestHelper.Bootstrap();
             var usage = TaskCollection.SelectTask("basictaskmethodargs").UsageExample;
 
             Assert.That(usage, Is.EqualTo("<appname> basictaskmethodargs -m <value> "));

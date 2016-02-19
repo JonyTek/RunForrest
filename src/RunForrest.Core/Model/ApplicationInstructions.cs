@@ -8,14 +8,7 @@ namespace RunForrest.Core.Model
 {
     internal class ApplicationInstructions
     {
-        private readonly ApplicationConfiguration configuration;
-
-        internal ApplicationInstructions(ApplicationConfiguration configuration)
-        {
-            this.configuration = configuration;
-            ExecuteAlias = new ExecutionAlias();
-            Instructions = new Dictionary<InstructionType, Instruction>();
-        }
+        private readonly ApplicationConfiguration configuration;        
 
         internal ExecutionAlias ExecuteAlias { get; set; }
 
@@ -26,6 +19,13 @@ namespace RunForrest.Core.Model
         internal bool VerbodeMode => Instructions.ContainsKey(InstructionType.Verbose);
         
         internal bool ParallelMode => Instructions.ContainsKey(InstructionType.Parallel);
+
+        internal ApplicationInstructions(ApplicationConfiguration configuration)
+        {
+            this.configuration = configuration;
+            ExecuteAlias = new ExecutionAlias();
+            Instructions = new Dictionary<InstructionType, Instruction>();
+        }
 
         internal ApplicationMode ApplicationMode
         {

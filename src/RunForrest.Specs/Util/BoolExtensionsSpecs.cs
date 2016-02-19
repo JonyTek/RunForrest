@@ -9,19 +9,15 @@ namespace RunForrest.Specs.Util
         [Test]
         public void ShouldExecuteIfTrue()
         {
-            const bool value = true;
-            value.ExecuteIfTrue(Assert.Pass);
-
-            Assert.Fail();
+            const bool value = false;
+            value.ExecuteIfTrue(Assert.Fail);
         }
 
         [Test]
         public void ShouldExecuteIfFalse()
         {
-            const bool value = false;
-            value.ExecuteIfFalse(Assert.Pass);
-
-            Assert.Fail();
+            const bool value = true;
+            value.ExecuteIfFalse(Assert.Fail);
         }
     }
 }

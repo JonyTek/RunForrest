@@ -7,12 +7,6 @@ namespace RunForrest.Specs.Model
     [TestFixture]
     public class TaskCollectionSpecs
     {
-        [SetUp]
-        public void OnBeforeEachTest()
-        {
-            TestHelper.Bootstrap();
-        }
-
         [Test]
         public void ShouldConfigureBasicTasks()
         {
