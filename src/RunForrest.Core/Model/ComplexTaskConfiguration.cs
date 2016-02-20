@@ -78,11 +78,9 @@ namespace RunForrest.Core.Model
         internal override AbstractTask ToTask()
         {
             if (method == null)
-                throw new InvalidOperationException(
-                    string.Format("No method found for {0}", method));
+                throw new InvalidOperationException($"No method found for {method}");
             if (string.IsNullOrEmpty(alias))
-                throw new InvalidOperationException(
-                    string.Format("No alias specified for {0}", method));
+                throw new InvalidOperationException($"No alias specified for {method}");
 
             return new ComplexTask<TInstance>(method, alias, description, methodArguments, instance, priority,
                 onBeforeEachTask, onAfterEachTask);

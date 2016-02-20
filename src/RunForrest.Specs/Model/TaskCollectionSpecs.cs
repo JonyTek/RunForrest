@@ -23,7 +23,7 @@ namespace RunForrest.Specs.Model
             var group = TaskCollection.SelectTaskGroup("taskgroup");
             var tasks = group.Tasks.ToArray();
 
-            Assert.That(tasks.Length, Is.EqualTo(2));
+            Assert.That(tasks.Length, Is.GreaterThan(2));
             Assert.That(group.Description, Is.EqualTo("task group description"));
         }
     }
