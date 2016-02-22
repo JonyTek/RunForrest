@@ -17,8 +17,8 @@ namespace RunForrest.Core.Runners
 
         protected void PrintEndTime(bool print)
         {
-            Sw.Stop();
             if (!print) return;
+            Sw.Stop();
             Printer.Info("Finished execution at: {0}", DateTime.Now.ToString("O"));
             Printer.Info("Total execution time: {0}ms", Sw.ElapsedMilliseconds);
         }
