@@ -33,7 +33,7 @@ namespace RunForrest.Core.Model
             onBeforeEachTask(this);
 
             var instance = on ?? InstanceToExecuteOn(instructions.ConstructorArguments);
-            var returnValue = Method.Invoke(instance, methodArguments);
+            var returnValue = Method.Invoke(instance, methodArguments ?? instructions.MethodArguments);
 
             onAfterEachTask(this, returnValue);
             configuration.OnAfterEachTask(this, returnValue);

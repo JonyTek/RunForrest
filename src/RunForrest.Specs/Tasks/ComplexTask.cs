@@ -24,6 +24,11 @@ namespace RunForrest.Specs.Tasks
         {
             TestHelper.Value = service.GetString();
         }
+
+        public void DoSomethingElse(string value)
+        {
+            TestHelper.Value = value;
+        }
     }
 
     public class ComplexTaskConfigurationAsInterface : IConfigureComplexTask<IComplexTask>
@@ -42,8 +47,17 @@ namespace RunForrest.Specs.Tasks
     {
         public void Setup(ComplexTaskConfiguration<ComplexTask> configuration)
         {
-            configuration.WithAlias("complextask1");
+            configuration.WithAlias("complextaskasclass");
             configuration.OnMethodWithName("dosomething");
+        }
+    }
+
+    public class ComplexTaskConfigurationAsClass1 : IConfigureComplexTask<ComplexTask>
+    {
+        public void Setup(ComplexTaskConfiguration<ComplexTask> configuration)
+        {
+            configuration.WithAlias("complextaskwithmethodarg");
+            configuration.OnMethodWithName("dosomethingelse");
         }
     }
 }
