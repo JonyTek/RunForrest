@@ -74,7 +74,7 @@ namespace RunForrest.Core.Util
             Info("-m -method\t\tpass method params\t\t<appname> <taskalias> -m arg1 arg2");
             Info("-c -constructor\t\tpass constructor args\t\t<appname> <taskalias> -c arg1 arg2");
             Info("-g -group\t\trun a group of tasks\t\t<appname> <groupalias> -g");
-            Info("-p -parra\t\trun a group in paralell\t<appname> <groupalias> -g -p");
+            Info("-p -parra\t\trun a group in parallel\t\t<appname> <groupalias> -g -p");
 
             Console.WriteLine();
             Info("Command v{0}", typeof(Printer).Assembly.GetName().Version.ToString());
