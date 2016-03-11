@@ -12,9 +12,9 @@ namespace RunForrest.ComplexTasks
             configuration.Ioc.Register<IComplexTask, MyComplexTask>();
 
             configuration.WithAlias("alias");
-            configuration.WithDescription("my sescription");
+            configuration.WithDescription("my description");
             configuration.OnMethodWithName("sayhello");
-            configuration.WithMethodArguments(new object[0]);
+            configuration.WithMethodArguments(new object[] {"ughjv"});
         }
     }
 }
